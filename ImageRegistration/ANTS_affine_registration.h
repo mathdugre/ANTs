@@ -14,7 +14,7 @@
 #include "itkCenteredTransformInitializer.h"
 #include "itkMattesMutualInformationImageToImageMetric.h"
 #include "itkMultiResolutionImageRegistrationMethod.h"
-#include "itkLinearInterpolateImageFunction.h"
+#include "itkRandomLinearInterpolateImageFunction.h"
 #include "itkANTSAffine3DTransform.h"
 #include "itkCenteredRigid2DTransform.h"
 #include "itkANTSCenteredAffine2DTransform.h"
@@ -23,7 +23,7 @@
 #include "itkTransformFileWriter.h"
 #include "itkImageRegionIteratorWithIndex.h"
 #include "itkResampleImageFilter.h"
-#include "itkLinearInterpolateImageFunction.h"
+#include "itkRandomLinearInterpolateImageFunction.h"
 #include "itkWarpImageFilter.h"
 #include "itkWarpImageWAffineFilter.h"
 
@@ -603,8 +603,8 @@ get_cost_value_mmi(ImagePointerType     fixedImage,
   typedef typename itk::MattesMutualInformationImageToImageMetric<ImageType, ImageType> mattesMutualInfoMetricType;
   typename mattesMutualInfoMetricType::Pointer mattesMutualInfo = mattesMutualInfoMetricType::New();
 
-  typedef typename itk::LinearInterpolateImageFunction<ImageType, double> InterpolatorType;
-  typename InterpolatorType::Pointer                                      interpolator = InterpolatorType::New();
+  typedef typename itk::RandomLinearInterpolateImageFunction<ImageType, double> InterpolatorType;
+  typename InterpolatorType::Pointer                                            interpolator = InterpolatorType::New();
 
   interpolator->SetInputImage(movingImage);
 
@@ -766,7 +766,7 @@ register_image_affine3d_mres_mask(ImagePointerType                  fixed_image,
 
   // typedef TransformType_Rigid2D TransformType_Pre;
 
-  typedef itk::LinearInterpolateImageFunction<ImageType, double>            InterpolatorType;
+  typedef itk::RandomLinearInterpolateImageFunction<ImageType, double>      InterpolatorType;
   typedef itk::MultiResolutionImageRegistrationMethod<ImageType, ImageType> RegistrationType;
 
   typedef itk::MultiResolutionPyramidImageFilter<ImageType, ImageType> fPyramidType;
@@ -923,7 +923,7 @@ register_image_affine2d_mres_mask(ImagePointerType                  fixed_image,
 
   // typedef TransformType_Rigid2D TransformType_Pre;
 
-  typedef itk::LinearInterpolateImageFunction<ImageType, double>            InterpolatorType;
+  typedef itk::RandomLinearInterpolateImageFunction<ImageType, double>      InterpolatorType;
   typedef itk::MultiResolutionImageRegistrationMethod<ImageType, ImageType> RegistrationType;
 
   typedef itk::MultiResolutionPyramidImageFilter<ImageType, ImageType> fPyramidType;
@@ -1438,8 +1438,8 @@ affine_image(const ImageTypePointer &     input_image,
   typedef itk::ResampleImageFilter<ImageType, ImageType> ResampleFilterType;
   typename ResampleFilterType::Pointer                   resampler = ResampleFilterType::New();
 
-  typedef itk::LinearInterpolateImageFunction<ImageType, double> InterpolatorType;
-  typename InterpolatorType::Pointer                             interpolator = InterpolatorType::New();
+  typedef itk::RandomLinearInterpolateImageFunction<ImageType, double> InterpolatorType;
+  typename InterpolatorType::Pointer                                   interpolator = InterpolatorType::New();
   resampler->SetInterpolator(interpolator);
   resampler->SetInput(input_image);
   resampler->SetSize(ref_image->GetLargestPossibleRegion().GetSize());

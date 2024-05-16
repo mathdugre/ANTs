@@ -8,7 +8,7 @@
 #include "itkTransformFileReader.h"
 #include "itkNearestNeighborInterpolateImageFunction.h"
 #include "itkBSplineInterpolateImageFunction.h"
-#include "itkLinearInterpolateImageFunction.h"
+#include "itkRandomLinearInterpolateImageFunction.h"
 #include "antsUtilities.h"
 // Needed for the LabelImageGaussianInterpolateImageFunction to work on
 // vector images
@@ -410,7 +410,7 @@ WarpImageMultiTransform(char *           moving_image_filename,
   else
   {
     using LinInterpolateType =
-      typename itk::LinearInterpolateImageFunction<ImageType, typename WarperType::CoordRepType>;
+      typename itk::RandomLinearInterpolateImageFunction<ImageType, typename WarperType::CoordRepType>;
     typename LinInterpolateType::Pointer interpolator_LN = LinInterpolateType::New();
     std::cout << "User Linear interpolation " << std::endl;
     warper->SetInterpolator(interpolator_LN);
@@ -427,8 +427,7 @@ WarpImageMultiTransform(char *           moving_image_filename,
 
     switch (opt.file_type)
     {
-      case AFFINE_FILE:
-      {
+      case AFFINE_FILE: {
         typename TranReaderType::Pointer tran_reader = TranReaderType::New();
         tran_reader->SetFileName(opt.filename);
         tran_reader->Update();
@@ -451,8 +450,7 @@ WarpImageMultiTransform(char *           moving_image_filename,
         break;
       }
 
-      case IDENTITY_TRANSFORM:
-      {
+      case IDENTITY_TRANSFORM: {
         typename AffineTransformType::Pointer aff;
         GetIdentityTransform(aff);
         // std::cout << " aff id" << transcount << std::endl;
@@ -461,8 +459,7 @@ WarpImageMultiTransform(char *           moving_image_filename,
         break;
       }
 
-      case IMAGE_AFFINE_HEADER:
-      {
+      case IMAGE_AFFINE_HEADER: {
         typename AffineTransformType::Pointer aff = AffineTransformType::New();
         typename ImageFileReaderType::Pointer reader_image_affine = ImageFileReaderType::New();
         reader_image_affine->SetFileName(opt.filename);
@@ -490,8 +487,7 @@ WarpImageMultiTransform(char *           moving_image_filename,
         break;
       }
 
-      case DEFORMATION_FILE:
-      {
+      case DEFORMATION_FILE: {
         typename FieldReaderType::Pointer field_reader = FieldReaderType::New();
         field_reader->SetFileName(opt.filename);
         field_reader->Update();

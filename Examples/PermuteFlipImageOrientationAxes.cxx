@@ -18,7 +18,7 @@
 #include "itkImage.h"
 #include "itkConstantPadImageFilter.h"
 #include "itkIdentityTransform.h"
-#include "itkLinearInterpolateImageFunction.h"
+#include "itkRandomLinearInterpolateImageFunction.h"
 #include "itkRecursiveGaussianImageFilter.h"
 #include "itkPermuteAxesImageFilter.h"
 #include "itkFlipImageFilter.h"

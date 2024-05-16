@@ -17,7 +17,7 @@
 #include "ReadWriteData.h"
 #include "itkResampleImageFilter.h"
 #include "itkIdentityTransform.h"
-#include "itkLinearInterpolateImageFunction.h"
+#include "itkRandomLinearInterpolateImageFunction.h"
 #include "itkNearestNeighborInterpolateImageFunction.h"
 #include "itkRecursiveGaussianImageFilter.h"
 #include "itkIntensityWindowingImageFilter.h"
@@ -173,7 +173,7 @@ ResampleImageBySpacing(std::vector<std::string> args, std::ostream * /*out_strea
 
     using TransformType = itk::IdentityTransform<double, 2>;
 
-    using InterpolatorType = itk::LinearInterpolateImageFunction<InternalImageType, double>;
+    using InterpolatorType = itk::RandomLinearInterpolateImageFunction<InternalImageType, double>;
     using InterpolatorType2 = itk::NearestNeighborInterpolateImageFunction<InternalImageType, double>;
 
     InterpolatorType::Pointer  interpolator = InterpolatorType::New();
@@ -306,7 +306,7 @@ ResampleImageBySpacing(std::vector<std::string> args, std::ostream * /*out_strea
 
     using TransformType = itk::IdentityTransform<double, 3>;
 
-    using InterpolatorType = itk::LinearInterpolateImageFunction<InternalImageType, double>;
+    using InterpolatorType = itk::RandomLinearInterpolateImageFunction<InternalImageType, double>;
     using InterpolatorType2 = itk::NearestNeighborInterpolateImageFunction<InternalImageType, double>;
 
     InterpolatorType::Pointer  interpolator = InterpolatorType::New();
@@ -429,7 +429,7 @@ ResampleImageBySpacing(std::vector<std::string> args, std::ostream * /*out_strea
     using ResampleFilterType = itk::ResampleImageFilter<InternalImageType, OutputImageType>;
     ResampleFilterType::Pointer resampler = ResampleFilterType::New();
     using TransformType = itk::IdentityTransform<double, 4>;
-    using InterpolatorType = itk::LinearInterpolateImageFunction<InternalImageType, double>;
+    using InterpolatorType = itk::RandomLinearInterpolateImageFunction<InternalImageType, double>;
     using InterpolatorType2 = itk::NearestNeighborInterpolateImageFunction<InternalImageType, double>;
     InterpolatorType::Pointer  interpolator = InterpolatorType::New();
     InterpolatorType2::Pointer interpolator2 = InterpolatorType2::New();

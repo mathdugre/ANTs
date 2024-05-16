@@ -25,7 +25,7 @@
 #include "itkImageFileReader.h"
 #include "itkImageFileWriter.h"
 #include "itkLabeledPointSetFileReader.h"
-#include "itkLinearInterpolateImageFunction.h"
+#include "itkRandomLinearInterpolateImageFunction.h"
 #include "itkRecursiveGaussianImageFilter.h"
 #include "itkResampleImageFilter.h"
 

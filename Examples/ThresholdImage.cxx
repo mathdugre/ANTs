@@ -28,7 +28,7 @@
 #include "itkImageRegionIteratorWithIndex.h"
 #include "itkKdTreeBasedKmeansEstimator.h"
 #include "itkLabelStatisticsImageFilter.h"
-#include "itkLinearInterpolateImageFunction.h"
+#include "itkRandomLinearInterpolateImageFunction.h"
 #include "itkListSample.h"
 #include "itkMinimumDecisionRule.h"
 #include "itkMultiplyImageFilter.h"

@@ -71,7 +71,7 @@
 
 // Headers for interpolating functions (to support the --interpolation choice)
 #include "itkBSplineInterpolateImageFunction.h"
-#include "itkLinearInterpolateImageFunction.h"
+#include "itkRandomLinearInterpolateImageFunction.h"
 #include "itkInterpolateImageFunction.h"
 #include "itkNearestNeighborInterpolateImageFunction.h"
 #include "itkWindowedSincInterpolateImageFunction.h"
@@ -555,7 +555,7 @@ ants_motion(itk::ants::CommandLineParser * parser)
 
   if (!std::strcmp(whichInterpolator.c_str(), "linear"))
   {
-    using LinearInterpolatorType = itk::LinearInterpolateImageFunction<ImageType, RealType>;
+    using LinearInterpolatorType = itk::RandomLinearInterpolateImageFunction<ImageType, RealType>;
     typename LinearInterpolatorType::Pointer linearInterpolator = LinearInterpolatorType::New();
     interpolator = linearInterpolator;
   }
@@ -689,7 +689,7 @@ ants_motion(itk::ants::CommandLineParser * parser)
     writeDisplacementField = parser->Convert<unsigned int>(wdopt->GetFunction(0)->GetName());
   }
 
-  bool                doEstimateLearningRateOnce(false);
+  bool doEstimateLearningRateOnce(false);
   // OptionType::Pointer rateOption = parser->GetOption("use-estimate-learning-rate-once");
   // if (rateOption && rateOption->GetNumberOfFunctions())
   // {
@@ -1814,7 +1814,8 @@ antsMotionCorrInitializeCommandLineOptions(itk::ants::CommandLineParser * parser
 
   // {
   //   std::string description =
-  //     std::string("turn on the option that lets you estimate the learning rate step size only at the beginning of each "
+  //     std::string("turn on the option that lets you estimate the learning rate step size only at the beginning of
+  //     each "
   //                 "level.  * useful as a second stage of fine-scale registration.");
 
   //   OptionType::Pointer option = OptionType::New();
@@ -1853,9 +1854,9 @@ antsMotionCorrInitializeCommandLineOptions(itk::ants::CommandLineParser * parser
     OptionType::Pointer option = OptionType::New();
     option->SetLongName("metric");
     option->SetShortName('m');
-    option->SetUsageOption(
-      0,
-      "CC[fixedImage,movingImage,metricWeight,radius,<samplingStrategy={Regular,Random}>,<samplingPercentage=[0,1]>,<useGradientFilter=false>]");
+    option->SetUsageOption(0,
+                           "CC[fixedImage,movingImage,metricWeight,radius,<samplingStrategy={Regular,Random}>,<"
+                           "samplingPercentage=[0,1]>,<useGradientFilter=false>]");
     option->SetUsageOption(1,
                            "MI[fixedImage,movingImage,metricWeight,numberOfBins,<samplingStrategy={Regular,Random}>,<"
                            "samplingPercentage=[0,1]>,<useGradientFilter=false>]");
@@ -1863,9 +1864,9 @@ antsMotionCorrInitializeCommandLineOptions(itk::ants::CommandLineParser * parser
 
                            "Demons[fixedImage,movingImage,metricWeight,radius,<samplingStrategy={Regular,Random}>,<"
                            "samplingPercentage=[0,1]>,<useGradientFilter=false>]");
-    option->SetUsageOption(
-      3,
-      "GC[fixedImage,movingImage,metricWeight,radius,<samplingStrategy={Regular,Random}>,<samplingPercentage=[0,1]>,<useGradientFilter=false>]");
+    option->SetUsageOption(3,
+                           "GC[fixedImage,movingImage,metricWeight,radius,<samplingStrategy={Regular,Random}>,<"
+                           "samplingPercentage=[0,1]>,<useGradientFilter=false>]");
     option->SetDescription(description);
     parser->AddOption(option);
   }
@@ -2149,13 +2150,11 @@ antsMotionCorr(std::vector<std::string> args, std::ostream * /*out_stream = null
 
   switch (dimension)
   {
-    case 2:
-    {
+    case 2: {
       return ants_motion<2>(parser);
     }
     break;
-    case 3:
-    {
+    case 3: {
       return ants_motion<3>(parser);
     }
     break;

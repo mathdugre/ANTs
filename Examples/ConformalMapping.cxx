@@ -672,7 +672,7 @@ std::endl;
 */
 /*** Evaluate quality of fit ***/
 /*
-typedef typename itk::LinearInterpolateImageFunction< ImageType, float > InterpolatorType;
+typedef typename itk::RandomLinearInterpolateImageFunction< ImageType, float > InterpolatorType;
 typename InterpolatorType::PointType testpoint;
 typename InterpolatorType::Pointer interp = InterpolatorType::New();
 interp->SetInputImage( outimage );
@@ -845,7 +845,7 @@ typename itk::ImageRegionIterator<ImageType>
 
 
 // Evaluate quality of fit
-//typedef typename itk::LinearInterpolateImageFunction< ImageType, float > InterpolatorType;
+//typedef typename itk::RandomLinearInterpolateImageFunction< ImageType, float > InterpolatorType;
 typedef typename itk::NearestNeighborInterpolateImageFunction< ImageType, float > InterpolatorType;
 typename InterpolatorType::PointType testpoint;
 typedef typename itk::ContinuousIndex< float, Dimension > ContinuousIndexType;

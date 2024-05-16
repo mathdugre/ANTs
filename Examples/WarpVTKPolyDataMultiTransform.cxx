@@ -148,7 +148,7 @@ WarpLabeledPointSetFileMultiTransform(char *           input_vtk_filename,
   // WarperType;
   using WarperType =
     itk::DisplacementFieldFromMultiTransformFilter<DisplacementFieldType, DisplacementFieldType, AffineTransformType>;
-  using FuncType = itk::LinearInterpolateImageFunction<ImageType>;
+  using FuncType = itk::RandomLinearInterpolateImageFunction<ImageType>;
 
   itk::TransformFactory<AffineTransformType>::RegisterTransform();
 
@@ -187,8 +187,7 @@ WarpLabeledPointSetFileMultiTransform(char *           input_vtk_filename,
 
     switch (opt_queue[i].file_type)
     {
-      case AFFINE_FILE:
-      {
+      case AFFINE_FILE: {
         typename TranReaderType::Pointer tran_reader = TranReaderType::New();
         tran_reader->SetFileName(opt.filename);
         tran_reader->Update();
@@ -202,8 +201,7 @@ WarpLabeledPointSetFileMultiTransform(char *           input_vtk_filename,
         warper->PushBackAffineTransform(aff);
         break;
       }
-      case DEFORMATION_FILE:
-      {
+      case DEFORMATION_FILE: {
         typename FieldReaderType::Pointer field_reader = FieldReaderType::New();
         field_reader->SetFileName(opt.filename);
         field_reader->Update();
@@ -401,8 +399,7 @@ ComposeMultiAffine(char * /*input_affine_txt*/,
 
     switch (opt_queue[i].file_type)
     {
-      case AFFINE_FILE:
-      {
+      case AFFINE_FILE: {
         typename TranReaderType::Pointer tran_reader = TranReaderType::New();
         tran_reader->SetFileName(opt.filename);
         tran_reader->Update();
@@ -417,8 +414,7 @@ ComposeMultiAffine(char * /*input_affine_txt*/,
         cnt_affine++;
         break;
       }
-      case DEFORMATION_FILE:
-      {
+      case DEFORMATION_FILE: {
         std::cout << "Compose affine only files: ignore " << opt.filename << std::endl;
         break;
       }
@@ -523,8 +519,8 @@ WarpVTKPolyDataMultiTransform(std::vector<std::string> args, std::ostream *)
   if (argc <= 4)
   {
     std::cout << "WarpLabeledPointSetFileMultiTransform ImageDimension inputVTKFile "
-              << "outputVTKFile [-R reference_image] "
-              << "{[deformation_field | [-i] affine_transform_txt ]}" << std::endl;
+              << "outputVTKFile [-R reference_image] " << "{[deformation_field | [-i] affine_transform_txt ]}"
+              << std::endl;
     return EXIT_FAILURE;
   }
 
@@ -543,8 +539,7 @@ WarpVTKPolyDataMultiTransform(std::vector<std::string> args, std::ostream *)
   {
     switch (CheckFileType(output_vtk_filename))
     {
-      case DEFORMATION_FILE:
-      {
+      case DEFORMATION_FILE: {
         if (reference_image_filename == nullptr)
         {
           std::cout << "the reference image file (-R) must be given!!!" << std::endl;
@@ -565,14 +560,12 @@ WarpVTKPolyDataMultiTransform(std::vector<std::string> args, std::ostream *)
 
         switch (kImageDim)
         {
-          case 2:
-          {
+          case 2: {
             WarpLabeledPointSetFileMultiTransform<2>(
               input_vtk_filename, output_vtk_filename, reference_image_filename, opt_queue);
             break;
           }
-          case 3:
-          {
+          case 3: {
             WarpLabeledPointSetFileMultiTransform<3>(
               input_vtk_filename, output_vtk_filename, reference_image_filename, opt_queue);
             break;
@@ -581,8 +574,7 @@ WarpVTKPolyDataMultiTransform(std::vector<std::string> args, std::ostream *)
         break;
       }
 
-      case AFFINE_FILE:
-      {
+      case AFFINE_FILE: {
         std::cout << "output_affine_txt: " << output_vtk_filename << std::endl;
         std::cout << "reference_affine_txt: ";
         if (reference_image_filename)
@@ -597,13 +589,11 @@ WarpVTKPolyDataMultiTransform(std::vector<std::string> args, std::ostream *)
 
         switch (kImageDim)
         {
-          case 2:
-          {
+          case 2: {
             ComposeMultiAffine<2>(input_vtk_filename, output_vtk_filename, reference_image_filename, opt_queue);
             break;
           }
-          case 3:
-          {
+          case 3: {
             ComposeMultiAffine<3>(input_vtk_filename, output_vtk_filename, reference_image_filename, opt_queue);
             break;
           }

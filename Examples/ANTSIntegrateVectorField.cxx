@@ -350,7 +350,7 @@ IntegrateVectorField(int argc, char * argv[])
   // UNUSED: typedef typename DisplacementFieldType::PointType                                      DPointType;
   using DefaultInterpolatorType = itk::VectorLinearInterpolateImageFunction<TimeVaryingVelocityFieldType, float>;
   typename DefaultInterpolatorType::Pointer vinterp = DefaultInterpolatorType::New();
-  using ScalarInterpolatorType = itk::LinearInterpolateImageFunction<ImageType, float>;
+  using ScalarInterpolatorType = itk::RandomLinearInterpolateImageFunction<ImageType, float>;
   VectorType zero;
   zero.Fill(0);
 
@@ -505,18 +505,15 @@ ANTSIntegrateVectorField(std::vector<std::string> args, std::ostream * /*out_str
 
   switch (dim)
   {
-    case 2:
-    {
+    case 2: {
       IntegrateVectorField<2>(argc, argv);
     }
     break;
-    case 3:
-    {
+    case 3: {
       IntegrateVectorField<3>(argc, argv);
     }
     break;
-    case 4:
-    {
+    case 4: {
       IntegrateVectorField<4>(argc, argv);
     }
     break;

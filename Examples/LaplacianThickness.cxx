@@ -802,7 +802,7 @@ LaplacianThickness(int argc, char * argv[])
   using TimeVaryingVelocityFieldType = DisplacementFieldType;
   using DefaultInterpolatorType = itk::VectorLinearInterpolateImageFunction<TimeVaryingVelocityFieldType, float>;
   typename DefaultInterpolatorType::Pointer vinterp = DefaultInterpolatorType::New();
-  using ScalarInterpolatorType = itk::LinearInterpolateImageFunction<ImageType, float>;
+  using ScalarInterpolatorType = itk::RandomLinearInterpolateImageFunction<ImageType, float>;
   typename ScalarInterpolatorType::Pointer sinterp = ScalarInterpolatorType::New();
   sinterp->SetInputImage(gm);
   if (sulci)
@@ -1131,13 +1131,11 @@ LaplacianThickness(std::vector<std::string> args, std::ostream * /*out_stream = 
   //   std::cout << " dim " << dim << std::endl;
   switch (dim)
   {
-    case 2:
-    {
+    case 2: {
       return LaplacianThickness<2>(argc, argv);
     }
     break;
-    case 3:
-    {
+    case 3: {
       return LaplacianThickness<3>(argc, argv);
     }
     break;

@@ -13,7 +13,7 @@
 #include "itkConstantBoundaryCondition.h"
 #include "itkIdentityTransform.h"
 #include "itkBSplineInterpolateImageFunction.h"
-#include "itkLinearInterpolateImageFunction.h"
+#include "itkRandomLinearInterpolateImageFunction.h"
 #include "itkGaussianInterpolateImageFunction.h"
 #include "itkNearestNeighborInterpolateImageFunction.h"
 #include "itkWindowedSincInterpolateImageFunction.h"
@@ -38,7 +38,7 @@ ResampleImage(int argc, char * argv[])
   typename TransformType::Pointer transform = TransformType::New();
   transform->SetIdentity();
 
-  using LinearInterpolatorType = itk::LinearInterpolateImageFunction<ImageType, RealType>;
+  using LinearInterpolatorType = itk::RandomLinearInterpolateImageFunction<ImageType, RealType>;
   typename LinearInterpolatorType::Pointer interpolator = LinearInterpolatorType::New();
   interpolator->SetInputImage(image);
 
@@ -154,18 +154,15 @@ ResampleImage(int argc, char * argv[])
     switch (std::stoi(argv[6]))
     {
       case 0:
-      default:
-      {
+      default: {
         resampler->SetInterpolator(interpolator);
       }
       break;
-      case 1:
-      {
+      case 1: {
         resampler->SetInterpolator(nn_interpolator);
       }
       break;
-      case 2:
-      {
+      case 2: {
         double sigma[ImageDimension];
         for (unsigned int d = 0; d < ImageDimension; d++)
         {
@@ -190,41 +187,34 @@ ResampleImage(int argc, char * argv[])
         resampler->SetInterpolator(g_interpolator);
       }
       break;
-      case 3:
-      {
+      case 3: {
         switch (arg7)
         {
           case 'h':
-          default:
-          {
+          default: {
             resampler->SetInterpolator(sh_interpolator);
           }
           break;
-          case 'c':
-          {
+          case 'c': {
             resampler->SetInterpolator(sc_interpolator);
           }
           break;
-          case 'l':
-          {
+          case 'l': {
             resampler->SetInterpolator(sl_interpolator);
           }
           break;
-          case 'w':
-          {
+          case 'w': {
             resampler->SetInterpolator(sw_interpolator);
           }
           break;
-          case 'b':
-          {
+          case 'b': {
             resampler->SetInterpolator(sb_interpolator);
           }
           break;
         }
         break;
       }
-      case 4:
-      {
+      case 4: {
         if (argc > 7 && std::stoi(argv[7]) >= 0 && std::stoi(argv[7]) <= 5)
         {
           bs_interpolator->SetSplineOrder(std::stoi(argv[7]));
@@ -339,18 +329,15 @@ ResampleImage(std::vector<std::string> args, std::ostream * /*out_stream = nullp
     case 0:
       switch (std::stoi(argv[1]))
       {
-        case 2:
-        {
+        case 2: {
           return ResampleImage<2, char>(argc, argv);
         }
         break;
-        case 3:
-        {
+        case 3: {
           return ResampleImage<3, char>(argc, argv);
         }
         break;
-        case 4:
-        {
+        case 4: {
           return ResampleImage<4, char>(argc, argv);
         }
         break;
@@ -362,18 +349,15 @@ ResampleImage(std::vector<std::string> args, std::ostream * /*out_stream = nullp
     case 1:
       switch (std::stoi(argv[1]))
       {
-        case 2:
-        {
+        case 2: {
           return ResampleImage<2, unsigned char>(argc, argv);
         }
         break;
-        case 3:
-        {
+        case 3: {
           return ResampleImage<3, unsigned char>(argc, argv);
         }
         break;
-        case 4:
-        {
+        case 4: {
           return ResampleImage<4, unsigned char>(argc, argv);
         }
         break;
@@ -385,18 +369,15 @@ ResampleImage(std::vector<std::string> args, std::ostream * /*out_stream = nullp
     case 2:
       switch (std::stoi(argv[1]))
       {
-        case 2:
-        {
+        case 2: {
           return ResampleImage<2, short>(argc, argv);
         }
         break;
-        case 3:
-        {
+        case 3: {
           return ResampleImage<3, short>(argc, argv);
         }
         break;
-        case 4:
-        {
+        case 4: {
           return ResampleImage<4, short>(argc, argv);
         }
         break;
@@ -407,18 +388,15 @@ ResampleImage(std::vector<std::string> args, std::ostream * /*out_stream = nullp
     case 3:
       switch (std::stoi(argv[1]))
       {
-        case 2:
-        {
+        case 2: {
           return ResampleImage<2, unsigned short>(argc, argv);
         }
         break;
-        case 3:
-        {
+        case 3: {
           return ResampleImage<3, unsigned short>(argc, argv);
         }
         break;
-        case 4:
-        {
+        case 4: {
           return ResampleImage<4, unsigned short>(argc, argv);
         }
         break;
@@ -429,18 +407,15 @@ ResampleImage(std::vector<std::string> args, std::ostream * /*out_stream = nullp
     case 4:
       switch (std::stoi(argv[1]))
       {
-        case 2:
-        {
+        case 2: {
           return ResampleImage<2, int>(argc, argv);
         }
         break;
-        case 3:
-        {
+        case 3: {
           return ResampleImage<3, int>(argc, argv);
         }
         break;
-        case 4:
-        {
+        case 4: {
           return ResampleImage<4, int>(argc, argv);
         }
         break;
@@ -451,18 +426,15 @@ ResampleImage(std::vector<std::string> args, std::ostream * /*out_stream = nullp
     case 5:
       switch (std::stoi(argv[1]))
       {
-        case 2:
-        {
+        case 2: {
           return ResampleImage<2, unsigned int>(argc, argv);
         }
         break;
-        case 3:
-        {
+        case 3: {
           return ResampleImage<3, unsigned int>(argc, argv);
         }
         break;
-        case 4:
-        {
+        case 4: {
           return ResampleImage<4, unsigned int>(argc, argv);
         }
         break;
@@ -473,18 +445,15 @@ ResampleImage(std::vector<std::string> args, std::ostream * /*out_stream = nullp
     case 6:
       switch (std::stoi(argv[1]))
       {
-        case 2:
-        {
+        case 2: {
           return ResampleImage<2, float>(argc, argv);
         }
         break;
-        case 3:
-        {
+        case 3: {
           return ResampleImage<3, float>(argc, argv);
         }
         break;
-        case 4:
-        {
+        case 4: {
           return ResampleImage<4, float>(argc, argv);
         }
         break;
@@ -495,18 +464,15 @@ ResampleImage(std::vector<std::string> args, std::ostream * /*out_stream = nullp
     case 7:
       switch (std::stoi(argv[1]))
       {
-        case 2:
-        {
+        case 2: {
           return ResampleImage<2, double>(argc, argv);
         }
         break;
-        case 3:
-        {
+        case 3: {
           return ResampleImage<3, double>(argc, argv);
         }
         break;
-        case 4:
-        {
+        case 4: {
           return ResampleImage<4, double>(argc, argv);
         }
         break;

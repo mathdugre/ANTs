@@ -7,7 +7,7 @@
 #include "itkNonLocalSuperresolutionImageFilter.h"
 
 #include "itkBSplineInterpolateImageFunction.h"
-#include "itkLinearInterpolateImageFunction.h"
+#include "itkRandomLinearInterpolateImageFunction.h"
 #include "itkGaussianInterpolateImageFunction.h"
 #include "itkInterpolateImageFunction.h"
 #include "itkNearestNeighborInterpolateImageFunction.h"

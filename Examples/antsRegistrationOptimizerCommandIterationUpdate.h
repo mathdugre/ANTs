@@ -140,7 +140,7 @@ public:
       else
       {
         this->Logger() << " "; // if the output of current iteration is written to disk, and star
-      }                        // will appear before line, else a free space will be printed to keep visual alignment.
+      } // will appear before line, else a free space will be printed to keep visual alignment.
 
       this->Logger() << "2DIAGNOSTIC, " << std::setw(5) << currentIteration << ", " << std::scientific
                      << std::setprecision(12) << this->m_Optimizer->GetValue() << ", " << std::scientific
@@ -368,8 +368,8 @@ public:
     movingTransform->SetOnlyMostRecentTransformToOptimizeOn();
 
     // Now we apply this output transform to get warped image
-    typedef itk::LinearInterpolateImageFunction<ImageType, RealType> LinearInterpolatorType;
-    typename LinearInterpolatorType::Pointer                         linearInterpolator = LinearInterpolatorType::New();
+    typedef itk::RandomLinearInterpolateImageFunction<ImageType, RealType> LinearInterpolatorType;
+    typename LinearInterpolatorType::Pointer linearInterpolator = LinearInterpolatorType::New();
 
     typedef itk::ResampleImageFilter<ImageType, ImageType, RealType> ResampleFilterType;
     typename ResampleFilterType::Pointer                             resampler = ResampleFilterType::New();

@@ -645,7 +645,7 @@ ClusterThresholdVariate(int argc, char * argv[])
   // long)(labelimage->GetPixel(vfIter.GetIndex()) - min)]
   // is < MinClusterSize
   // unsigned long vecind = 0;
-  fIterator     mIter(mask, mask->GetLargestPossibleRegion());
+  fIterator mIter(mask, mask->GetLargestPossibleRegion());
   for (mIter.GoToBegin(); !mIter.IsAtEnd(); ++mIter)
   {
     if (mIter.Get() > 0)
@@ -1481,7 +1481,7 @@ ConvertVectorToImage(unsigned int argc, char * argv[])
   typename MatrixImageType::Pointer vecimg = nullptr;
   ReadImage<MatrixImageType>(vecimg, vecfn.c_str());
   // unsigned long voxct = 0, mct = 0;
-  Iterator      mIter(mask, mask->GetLargestPossibleRegion());
+  Iterator mIter(mask, mask->GetLargestPossibleRegion());
   // for (mIter.GoToBegin(); !mIter.IsAtEnd(); ++mIter)
   // {
   //   if (mIter.Get() >= 0.5f)
@@ -1573,8 +1573,8 @@ template <unsigned int ImageDimension>
 int
 Where(int argc, char * argv[])
 {
-  typedef float                                        PixelType;
-  typedef itk::Image<PixelType, ImageDimension>        ImageType;
+  typedef float                                 PixelType;
+  typedef itk::Image<PixelType, ImageDimension> ImageType;
   // typedef itk::ImageRegionIteratorWithIndex<ImageType> Iterator;
 
   int         argct = 4;
@@ -1896,48 +1896,39 @@ NeighborhoodStats(int itkNotUsed(argc), char * argv[])
 
   switch (whichStat)
   {
-    case 0:
-    {
+    case 0: {
       indexSelectionFilter->SetIndex(0);
       break;
     }
-    case 1:
-    {
+    case 1: {
       indexSelectionFilter->SetIndex(1);
       break;
     }
-    case 2:
-    {
+    case 2: {
       indexSelectionFilter->SetIndex(2);
       break;
     }
-    case 3:
-    {
+    case 3: {
       indexSelectionFilter->SetIndex(3);
       break;
     }
-    case 4:
-    {
+    case 4: {
       indexSelectionFilter->SetIndex(4);
       break;
     }
-    case 5:
-    {
+    case 5: {
       indexSelectionFilter->SetIndex(5);
       break;
     }
-    case 6:
-    {
+    case 6: {
       indexSelectionFilter->SetIndex(6);
       break;
     }
-    case 7:
-    {
+    case 7: {
       indexSelectionFilter->SetIndex(7);
       break;
     }
-    default:
-    {
+    default: {
       std::cerr << "Unrecognized option: " << whichStat << std::endl;
       return EXIT_FAILURE;
     }
@@ -2163,9 +2154,9 @@ SharpenImage(int argc, char * argv[])
   const std::string inputFilename = std::string(argv[4]);
 
   bool useImageSpacing = true;
-  if(argc > 5)
+  if (argc > 5)
   {
-  useImageSpacing = static_cast<bool>(std::stoi(argv[5]));
+    useImageSpacing = static_cast<bool>(std::stoi(argv[5]));
   }
 
   typename ImageType::Pointer inputImage = nullptr;
@@ -5303,7 +5294,7 @@ FitSphere(int argc, char * argv[])
   typedef typename ImageType::SizeType SizeType;
   typedef typename ImageType::SpacingType SpacingType;
   typedef itk::AffineTransform<double,ImageDimension>   AffineTransformType;
-  typedef itk::LinearInterpolateImageFunction<ImageType,double>  InterpolatorType1;
+  typedef itk::RandomLinearInterpolateImageFunction<ImageType,double>  InterpolatorType1;
   typedef itk::NearestNeighborInterpolateImageFunction<ImageType,double>  InterpolatorType2;
   typedef itk::ImageRegionIteratorWithIndex<ImageType> Iterator;
 
@@ -5334,7 +5325,7 @@ FitSphere(int argc, char * argv[])
 
   typename ImageType::Pointer surf = LabelSurface<ImageType>(image1,wmimage);
 
-  typedef itk::LinearInterpolateImageFunction<ImageType,float> ScalarInterpolatorType;
+  typedef itk::RandomLinearInterpolateImageFunction<ImageType,float> ScalarInterpolatorType;
   typename ScalarInterpolatorType::Pointer ginterp =  ScalarInterpolatorType::New();
   ginterp->SetInputImage(image1);
   typename ScalarInterpolatorType::ContinuousIndexType  Y1;
@@ -6196,8 +6187,7 @@ TensorFunctions(int argc, char * argv[])
       }
       else
       {
-        std::cout << "Unrecognized component.  Need to specify "
-                  << "xx, xy, xz, yy, yz, or zz";
+        std::cout << "Unrecognized component.  Need to specify " << "xx, xy, xz, yy, yz, or zz";
         return EXIT_FAILURE;
       }
     }
@@ -6701,7 +6691,7 @@ CompareHeadersAndImages(int argc, char * argv[])
       typename ImageType::Pointer varimage = resample->GetOutput();
     }
     float         i1norm = 0, i2norm = 0; // i3norm=0,i1i3norm=0;
-    unsigned long ct1 = 1, ct2 = 1;           // ct3=1,ct13=1;
+    unsigned long ct1 = 1, ct2 = 1;       // ct3=1,ct13=1;
     Iterator      vfIter2(image1, image1->GetLargestPossibleRegion());
     for (vfIter2.GoToBegin(); !vfIter2.IsAtEnd(); ++vfIter2)
     {
@@ -6747,28 +6737,28 @@ CompareHeadersAndImages(int argc, char * argv[])
     // for (vfIter2.GoToBegin(); !vfIter2.IsAtEnd(); ++vfIter2)
     // {
     //   IndexType ind = vfIter2.GetIndex();
-      // float     pix2;
-      // if (isfloat)
-      // {
-      //   pix2 = floatval;
-      // }
-      // else
-      // {
-      //   pix2 = image2->GetPixel(ind) / mean2;
-      // }
-      //      float pix3=vfIter2.Get()/mean2;
-      // float pix1 = image1->GetPixel(ind) / mean1;
+    // float     pix2;
+    // if (isfloat)
+    // {
+    //   pix2 = floatval;
+    // }
+    // else
+    // {
+    //   pix2 = image2->GetPixel(ind) / mean2;
+    // }
+    //      float pix3=vfIter2.Get()/mean2;
+    // float pix1 = image1->GetPixel(ind) / mean1;
 
-      // if (pix1 > 0 || pix2 > 0)
-      // {
-      //   i1i2norm += static_cast<float>(std::fabs(pix1 - pix2));
-      //   ct12++;
-      // }
-      //      if ( pix1 > 0 || pix3 > 0)
-      // {
-      //  i1i3norm+=fabs(pix1-pix3);
-      //  ct13++;
-      // }
+    // if (pix1 > 0 || pix2 > 0)
+    // {
+    //   i1i2norm += static_cast<float>(std::fabs(pix1 - pix2));
+    //   ct12++;
+    // }
+    //      if ( pix1 > 0 || pix3 > 0)
+    // {
+    //  i1i3norm+=fabs(pix1-pix3);
+    //  ct13++;
+    // }
     // }
     //  float idice1 = 1.0 - 2.0*i1i3norm/ct13 /  (  i1norm/ct1 + i3norm / ct3 );
     // std::cout << " DiceImageDifference: " << idice0 << " IntensityDifference: " << i1i2norm << std::endl;
@@ -6927,7 +6917,7 @@ CompareHeadersAndImages(int argc, char * argv[])
 //   typedef  typename ImageType::SizeType SizeType;
 //   typedef  typename ImageType::SpacingType SpacingType;
 //   typedef itk::AffineTransform<double,ImageDimension>   AffineTransformType;
-//   typedef itk::LinearInterpolateImageFunction<ImageType,double>  InterpolatorType1;
+//   typedef itk::RandomLinearInterpolateImageFunction<ImageType,double>  InterpolatorType1;
 //   typedef itk::NearestNeighborInterpolateImageFunction<ImageType,double>  InterpolatorType2;
 //   typedef itk::ImageRegionIteratorWithIndex<ImageType> Iterator;
 //
@@ -8331,7 +8321,7 @@ FastMarchingExtension(int argc, char * argv[])
   typename NodePairContainerType::Pointer alivePoints = NodePairContainerType::New();
   alivePoints->Initialize();
   // unsigned int seedct = 0, alivect = 0;
-  Iterator     vfIter2(labimage, labimage->GetLargestPossibleRegion());
+  Iterator vfIter2(labimage, labimage->GetLargestPossibleRegion());
   for (vfIter2.GoToBegin(); !vfIter2.IsAtEnd(); ++vfIter2)
   {
     typename ImageType::IndexType ind = vfIter2.GetIndex();
@@ -9652,10 +9642,8 @@ CountVoxelDifference(int argc, char * argv[])
   logfile.open(outname.c_str());
   if (logfile.good())
   {
-    logfile << " Err "
-            << " : " << err << " %ER "
-            << " : " << err / (maskct)*100.0f << " NER "
-            << " : " << negerr / maskct * 100.0f << std::endl;
+    logfile << " Err " << " : " << err << " %ER " << " : " << err / (maskct) * 100.0f << " NER " << " : "
+            << negerr / maskct * 100.0f << std::endl;
   }
   return 0;
 }
@@ -9975,15 +9963,12 @@ DiceAndMinDistSum(int argc, char * argv[])
   {
     if (outdist)
     {
-      logfile << " AvgMinDist "
-              << " : " << sum / (float)labct << " AvgDice "
-              << " : " << sumdice / (float)labct << " AvgRO "
-              << " : " << sumro / (float)labct << std::endl;
+      logfile << " AvgMinDist " << " : " << sum / (float)labct << " AvgDice " << " : " << sumdice / (float)labct
+              << " AvgRO " << " : " << sumro / (float)labct << std::endl;
     }
     else
     {
-      logfile << " AvgDice "
-              << " : " << sumdice / (float)labct << std::endl;
+      logfile << " AvgDice " << " : " << sumdice / (float)labct << std::endl;
     }
   }
 
@@ -10791,8 +10776,7 @@ ROIStatistics(int argc, char * argv[])
   int argct = 2;
   if (argc < 6)
   {
-    std::cout << " not enough parameters --- usage example 1 :"
-              << "" << std::endl;
+    std::cout << " not enough parameters --- usage example 1 :" << "" << std::endl;
     std::cout << argv[0] << " ImageMath  3 output.csv ROIStatistics roinames.txt LabelImage.nii.gz ValueImage.nii.gz  "
               << std::endl;
     throw std::exception();
@@ -10907,8 +10891,8 @@ ROIStatistics(int argc, char * argv[])
     labelcount++;
   }
 
-  typedef itk::LinearInterpolateImageFunction<ImageType, float> ScalarInterpolatorType;
-  typename ScalarInterpolatorType::Pointer                      interp = ScalarInterpolatorType::New();
+  typedef itk::RandomLinearInterpolateImageFunction<ImageType, float> ScalarInterpolatorType;
+  typename ScalarInterpolatorType::Pointer                            interp = ScalarInterpolatorType::New();
   if (valimage)
   {
     interp->SetInputImage(valimage);
@@ -12334,7 +12318,7 @@ CorrelationVoting(int argc, char * argv[])
               product += value * iValue;
             }
           } // metricIt.IndexInBounds()
-        }   // j >= metricIt.Size()
+        } // j >= metricIt.Size()
 
         targetVar /= (k - 1);
         imageVar /= (k - 1);
@@ -13601,10 +13585,10 @@ getBlobCorrespondenceMatrix(unsigned int             radval,
   if ((!blobs2.empty()) && (!blobs1.empty()))
   {
     // unsigned int                                                  count2;
-    RealType                                                      smallval = 1.e-4;
-    typedef itk::LinearInterpolateImageFunction<ImageType, float> ScalarInterpolatorType;
-    typedef typename ScalarInterpolatorType::Pointer              InterpPointer;
-    InterpPointer                                                 interp1 = ScalarInterpolatorType::New();
+    RealType                                                            smallval = 1.e-4;
+    typedef itk::RandomLinearInterpolateImageFunction<ImageType, float> ScalarInterpolatorType;
+    typedef typename ScalarInterpolatorType::Pointer                    InterpPointer;
+    InterpPointer                                                       interp1 = ScalarInterpolatorType::New();
     interp1->SetInputImage(image);
     InterpPointer interp2 = ScalarInterpolatorType::New();
     interp2->SetInputImage(image2);

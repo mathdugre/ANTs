@@ -62,7 +62,7 @@
 #include "itkJensenHavrdaCharvatTsallisPointSetToPointSetMetricv4.h"
 #include "itkJointHistogramMutualInformationImageToImageMetricv4.h"
 #include "itkLabeledPointSetToPointSetMetricv4.h"
-#include "itkLinearInterpolateImageFunction.h"
+#include "itkRandomLinearInterpolateImageFunction.h"
 #include "itkMatrixOffsetTransformBase.h"
 #include "itkMattesMutualInformationImageToImageMetricv4.h"
 #include "itkMeanSquaresImageToImageMetricv4.h"

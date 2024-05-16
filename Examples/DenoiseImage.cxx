@@ -7,7 +7,7 @@
 #include "itkAddImageFilter.h"
 #include "itkAdaptiveNonLocalMeansDenoisingImageFilter.h"
 #include "itkIdentityTransform.h"
-#include "itkLinearInterpolateImageFunction.h"
+#include "itkRandomLinearInterpolateImageFunction.h"
 #include "itkResampleImageFilter.h"
 #include "itkShrinkImageFilter.h"
 #include "itkSubtractImageFilter.h"
@@ -338,7 +338,7 @@ Denoise(itk::ants::CommandLineParser * parser)
       resampler->SetTransform(transform);
     }
     {
-      using LinearInterpolatorType = itk::LinearInterpolateImageFunction<ImageType, RealType>;
+      using LinearInterpolatorType = itk::RandomLinearInterpolateImageFunction<ImageType, RealType>;
       typename LinearInterpolatorType::Pointer interpolator = LinearInterpolatorType::New();
       interpolator->SetInputImage(subtracter->GetOutput());
       resampler->SetInterpolator(interpolator);
@@ -640,8 +640,7 @@ DenoiseImage(std::vector<std::string> args, std::ostream * /*out_stream = nullpt
     }
     else
     {
-      std::cerr << "No input images were specified.  Specify an input image"
-                << " with the -i option" << std::endl;
+      std::cerr << "No input images were specified.  Specify an input image" << " with the -i option" << std::endl;
       return EXIT_FAILURE;
     }
     itk::ImageIOBase::Pointer imageIO =
@@ -651,18 +650,15 @@ DenoiseImage(std::vector<std::string> args, std::ostream * /*out_stream = nullpt
 
   switch (dimension)
   {
-    case 2:
-    {
+    case 2: {
       return Denoise<2>(parser);
     }
     break;
-    case 3:
-    {
+    case 3: {
       return Denoise<3>(parser);
     }
     break;
-    case 4:
-    {
+    case 4: {
       return Denoise<4>(parser);
     }
     break;

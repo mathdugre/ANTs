@@ -23,7 +23,7 @@
 #include "itkBSplineDerivativeKernelFunction.h"
 #include "itkCentralDifferenceImageFunction.h"
 #include "itkBSplineInterpolateImageFunction.h"
-#include "itkLinearInterpolateImageFunction.h"
+#include "itkRandomLinearInterpolateImageFunction.h"
 #include "itkTranslationTransform.h"
 #include "itkArray2D.h"
 #include "itkImageBase.h"
@@ -159,13 +159,13 @@ public:
 
   /** Interpolator type. */
   typedef double CoordRepType;
-  typedef //       //    LinearInterpolateImageFunction<MovingImageType,CoordRepType>
+  typedef //       //    RandomLinearInterpolateImageFunction<MovingImageType,CoordRepType>
     BSplineInterpolateImageFunction<MovingImageType, CoordRepType>
                                                InterpolatorType;
   typedef typename InterpolatorType::Pointer   InterpolatorPointer;
   typedef typename InterpolatorType::PointType PointType;
   typedef InterpolatorType                     DefaultInterpolatorType;
-  //  typedef LinearInterpolateImageFunction<MovingImageType,CoordRepType>
+  //  typedef RandomLinearInterpolateImageFunction<MovingImageType,CoordRepType>
   // DefaultInterpolatorType;
 
   /** Covariant vector type. */
@@ -332,9 +332,9 @@ public:
     //      typedef ImageRegionIterator<JointPDFType> JointPDFIteratorType;
     //      JointPDFIteratorType jointPDFIterator ( m_JointPDF, m_JointPDF->GetBufferedRegion() );
 
-    float         px, py, pxy;
-    double        mival = 0;
-    double        mi;
+    float  px, py, pxy;
+    double mival = 0;
+    double mi;
     // unsigned long ct = 0;
 
     typename JointPDFType::IndexType index;

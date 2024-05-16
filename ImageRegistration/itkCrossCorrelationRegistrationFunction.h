@@ -19,7 +19,7 @@
 #include "itkPoint.h"
 #include "itkCovariantVector.h"
 #include "itkInterpolateImageFunction.h"
-#include "itkLinearInterpolateImageFunction.h"
+#include "itkRandomLinearInterpolateImageFunction.h"
 #include "itkCentralDifferenceImageFunction.h"
 #include "itkGradientRecursiveGaussianImageFilter.h"
 
@@ -37,7 +37,7 @@ namespace itk
  *
  * Non-integer moving image values are obtained by using
  * interpolation. The default interpolator is of type
- * LinearInterpolateImageFunction. The user may set other
+ * RandomLinearInterpolateImageFunction. The user may set other
  * interpolators via method SetMovingImageInterpolator. Note that the input
  * interpolator must derive from baseclass InterpolateImageFunction.
  *
@@ -104,11 +104,11 @@ public:
   typedef typename Superclass::TimeStepType    TimeStepType;
 
   /** Interpolator type. */
-  typedef double                                                        CoordRepType;
-  typedef InterpolateImageFunction<MovingImageType, CoordRepType>       InterpolatorType;
-  typedef typename InterpolatorType::Pointer                            InterpolatorPointer;
-  typedef typename InterpolatorType::PointType                          PointType;
-  typedef LinearInterpolateImageFunction<MovingImageType, CoordRepType> DefaultInterpolatorType;
+  typedef double                                                              CoordRepType;
+  typedef InterpolateImageFunction<MovingImageType, CoordRepType>             InterpolatorType;
+  typedef typename InterpolatorType::Pointer                                  InterpolatorPointer;
+  typedef typename InterpolatorType::PointType                                PointType;
+  typedef RandomLinearInterpolateImageFunction<MovingImageType, CoordRepType> DefaultInterpolatorType;
 
   /** Covariant vector type. */
   typedef CovariantVector<double, itkGetStaticConstMacro(ImageDimension)> CovariantVectorType;

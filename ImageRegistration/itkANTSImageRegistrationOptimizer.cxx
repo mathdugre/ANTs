@@ -22,7 +22,7 @@
 #include "itkVectorParameterizedNeighborhoodOperatorImageFilter.h"
 #include "itkANTSImageRegistrationOptimizer.h"
 #include "itkIdentityTransform.h"
-#include "itkLinearInterpolateImageFunction.h"
+#include "itkRandomLinearInterpolateImageFunction.h"
 #include "itkRecursiveGaussianImageFilter.h"
 #include "itkVectorGaussianInterpolateImageFunction.h"
 #include "itkResampleImageFilter.h"
@@ -89,10 +89,10 @@ ANTSImageRegistrationOptimizer<TDimension, TReal>::SubsampleImage(ImagePointer i
   //    RealType minimumSpacing = inputSpacing.GetVnlVector().min_value();
   //    RealType maximumSpacing = inputSpacing.GetVnlVector().max_value();
 
-  typedef ResampleImageFilter<ImageType, ImageType>        ResamplerType;
-  typename ResamplerType::Pointer                          resampler = ResamplerType::New();
-  typedef LinearInterpolateImageFunction<ImageType, TComp> InterpolatorType;
-  typename InterpolatorType::Pointer                       interpolator = InterpolatorType::New();
+  typedef ResampleImageFilter<ImageType, ImageType>              ResamplerType;
+  typename ResamplerType::Pointer                                resampler = ResamplerType::New();
+  typedef RandomLinearInterpolateImageFunction<ImageType, TComp> InterpolatorType;
+  typename InterpolatorType::Pointer                             interpolator = InterpolatorType::New();
   interpolator->SetInputImage(image);
   resampler->SetInterpolator(interpolator);
   typedef itk::IdentityTransform<TComp, TDimension> IdentityTransformType;
@@ -473,9 +473,9 @@ ANTSImageRegistrationOptimizer<TDimension, TReal>::ComposeDiffs(DisplacementFiel
   vinterp->SetInputImage(field);
   //    vinterp->SetParameters(nullptr,1);
 
-  VPointType   pointIn1;
-  VPointType   pointIn2;
-  VPointType   pointIn3;
+  VPointType pointIn1;
+  VPointType pointIn2;
+  VPointType pointIn3;
   // unsigned int ct = 0;
   // iterate through fieldtowarpby finding the points that it maps to via field.
   // then take the difference from the original point and put it in the output field.
@@ -519,7 +519,7 @@ ANTSImageRegistrationOptimizer<TDimension, TReal>::ComposeDiffs(DisplacementFiel
       fieldout->SetPixel(m_FieldIter.GetIndex(), out);
       // ct++;
     } // endif
-  }   // end iteration
+  } // end iteration
 }
 
 template <unsigned int TDimension, typename TReal>
@@ -885,11 +885,11 @@ ANTSImageRegistrationOptimizer<TDimension, TReal>::ComputeUpdateField(Displaceme
     */
     // normalize update field then add to total field
     typedef ImageRegionIteratorWithIndex<DisplacementFieldType> Iterator;
-    Iterator      dIter(totalUpdateField, totalUpdateField->GetLargestPossibleRegion());
-    TReal         mag = 0.0;
-    TReal         max = 0.0;
+    Iterator dIter(totalUpdateField, totalUpdateField->GetLargestPossibleRegion());
+    TReal    mag = 0.0;
+    TReal    max = 0.0;
     // unsigned long ct = 0;
-    TReal         total = 0;
+    TReal total = 0;
     for (dIter.GoToBegin(); !dIter.IsAtEnd(); ++dIter)
     {
       typename ImageType::IndexType index = dIter.GetIndex();
@@ -1365,11 +1365,11 @@ ANTSImageRegistrationOptimizer<TDimension, TReal>::ComputeUpdateFieldAlternating
     */
     // normalize update field then add to total field
     typedef ImageRegionIteratorWithIndex<DisplacementFieldType> Iterator;
-    Iterator      dIter(totalUpdateField, totalUpdateField->GetLargestPossibleRegion());
-    TReal         mag = 0.0;
-    TReal         max = 0.0;
+    Iterator dIter(totalUpdateField, totalUpdateField->GetLargestPossibleRegion());
+    TReal    mag = 0.0;
+    TReal    max = 0.0;
     // unsigned long ct = 0;
-    TReal         total = 0;
+    TReal total = 0;
     for (dIter.GoToBegin(); !dIter.IsAtEnd(); ++dIter)
     {
       typename ImageType::IndexType index = dIter.GetIndex();
@@ -2640,7 +2640,7 @@ ANTSImageRegistrationOptimizer<TDimension, TReal>::IntegratePointVelocity(TReal 
   VectorType velo;
   velo.Fill(0);
 
-  TReal                           itime = starttimein;
+  TReal itime = starttimein;
   // unsigned long                   ct = 0;
   TReal                           thislength = 0, euclideandist = 0;
   bool                            timedone = false;

@@ -62,8 +62,8 @@ RegistrationHelper<TComputeType, VImageDimension>::RegistrationHelper()
   , m_InitializeTransformsPerStage(false)
   , m_AllPreviousTransformsAreLinear(true)
 {
-  typedef itk::LinearInterpolateImageFunction<ImageType, RealType> LinearInterpolatorType;
-  typename LinearInterpolatorType::Pointer                         linearInterpolator = LinearInterpolatorType::New();
+  typedef itk::RandomLinearInterpolateImageFunction<ImageType, RealType> LinearInterpolatorType;
+  typename LinearInterpolatorType::Pointer linearInterpolator = LinearInterpolatorType::New();
   this->m_Interpolator = linearInterpolator;
 }
 
@@ -919,8 +919,7 @@ RegistrationHelper<TComputeType, VImageDimension>::DoRegistration()
 
       switch (currentMetricType)
       {
-        case CC:
-        {
+        case CC: {
           const unsigned int radiusOption = stageMetricList[currentMetricNumber].m_Radius;
           this->Logger() << "  using the CC metric (radius = " << radiusOption
                          << ", weight = " << stageMetricList[currentMetricNumber].m_Weighting
@@ -938,8 +937,7 @@ RegistrationHelper<TComputeType, VImageDimension>::DoRegistration()
           imageMetric = correlationMetric;
         }
         break;
-        case Mattes:
-        {
+        case Mattes: {
           const unsigned int binOption = stageMetricList[currentMetricNumber].m_NumberOfBins;
           this->Logger() << "  using the Mattes MI metric (number of bins = " << binOption
                          << ", weight = " << stageMetricList[currentMetricNumber].m_Weighting
@@ -955,8 +953,7 @@ RegistrationHelper<TComputeType, VImageDimension>::DoRegistration()
           imageMetric = mutualInformationMetric;
         }
         break;
-        case MI:
-        {
+        case MI: {
           const unsigned int binOption = stageMetricList[currentMetricNumber].m_NumberOfBins;
           this->Logger() << "  using the joint histogram MI metric (number of bins = " << binOption
                          << ", weight = " << stageMetricList[currentMetricNumber].m_Weighting
@@ -974,8 +971,7 @@ RegistrationHelper<TComputeType, VImageDimension>::DoRegistration()
           imageMetric = mutualInformationMetric;
         }
         break;
-        case MeanSquares:
-        {
+        case MeanSquares: {
           this->Logger() << "  using the MeanSquares metric "
                          << "( weight = " << stageMetricList[currentMetricNumber].m_Weighting
                          << ", use gradient filter = " << stageMetricList[currentMetricNumber].m_UseGradientFilter
@@ -989,8 +985,7 @@ RegistrationHelper<TComputeType, VImageDimension>::DoRegistration()
           imageMetric = meanSquaresMetric;
         }
         break;
-        case Demons:
-        {
+        case Demons: {
           this->Logger() << "  using the Demons metric "
                          << "( weight = " << stageMetricList[currentMetricNumber].m_Weighting
                          << ", use gradient filter = " << stageMetricList[currentMetricNumber].m_UseGradientFilter
@@ -1002,8 +997,7 @@ RegistrationHelper<TComputeType, VImageDimension>::DoRegistration()
           imageMetric = demonsMetric;
         }
         break;
-        case GC:
-        {
+        case GC: {
           this->Logger() << "  using the global correlation metric "
                          << "( weight = " << stageMetricList[currentMetricNumber].m_Weighting
                          << ", use gradient filter = " << stageMetricList[currentMetricNumber].m_UseGradientFilter
@@ -1014,8 +1008,7 @@ RegistrationHelper<TComputeType, VImageDimension>::DoRegistration()
           imageMetric = corrMetric;
         }
         break;
-        case ICP:
-        {
+        case ICP: {
           this->Logger() << "  using the ICP metric (weight = " << stageMetricList[currentMetricNumber].m_Weighting
                          << ")" << std::endl;
           typedef itk::EuclideanDistancePointSetToPointSetMetricv4<LabeledPointSetType, LabeledPointSetType, RealType>
@@ -1025,8 +1018,7 @@ RegistrationHelper<TComputeType, VImageDimension>::DoRegistration()
           labeledPointSetMetric->SetPointSetMetric(icpMetric.GetPointer());
         }
         break;
-        case PSE:
-        {
+        case PSE: {
           this->Logger() << "  using the PSE metric (weight = " << stageMetricList[currentMetricNumber].m_Weighting
                          << ")" << std::endl;
           typedef itk::ExpectationBasedPointSetToPointSetMetricv4<LabeledPointSetType, LabeledPointSetType, RealType>
@@ -1038,8 +1030,7 @@ RegistrationHelper<TComputeType, VImageDimension>::DoRegistration()
           labeledPointSetMetric->SetPointSetMetric(pseMetric.GetPointer());
         }
         break;
-        case JHCT:
-        {
+        case JHCT: {
           this->Logger() << "  using the JHCT metric (weight = " << stageMetricList[currentMetricNumber].m_Weighting
                          << ")" << std::endl;
           typedef itk::JensenHavrdaCharvatTsallisPointSetToPointSetMetricv4<LabeledPointSetType, RealType>
@@ -1055,8 +1046,7 @@ RegistrationHelper<TComputeType, VImageDimension>::DoRegistration()
           labeledPointSetMetric->SetPointSetMetric(jhctMetric.GetPointer());
         }
         break;
-        case IGDM:
-        {
+        case IGDM: {
           this->Logger() << "  using the IGDM metric (weight = " << stageMetricList[currentMetricNumber].m_Weighting
                          << ")" << std::endl;
           typedef itk::
@@ -1269,8 +1259,8 @@ RegistrationHelper<TComputeType, VImageDimension>::DoRegistration()
 
     if (sigmas.size() != numberOfLevels)
     {
-      this->Logger() << "ERROR:  The number of smoothing sigmas "
-                     << "does not match the number of levels." << std::endl;
+      this->Logger() << "ERROR:  The number of smoothing sigmas " << "does not match the number of levels."
+                     << std::endl;
       return EXIT_FAILURE;
     }
     for (unsigned int n = 0; n < smoothingSigmasPerLevel.Size(); n++)
@@ -1447,8 +1437,7 @@ RegistrationHelper<TComputeType, VImageDimension>::DoRegistration()
 
     switch (whichTransform)
     {
-      case Affine:
-      {
+      case Affine: {
         if (stageMetricList[0].m_MetricType != IGDM)
         {
           this->AddLinearTransformToCompositeTransform<AffineRegistrationType>(this->m_CompositeTransform,
@@ -1494,8 +1483,7 @@ RegistrationHelper<TComputeType, VImageDimension>::DoRegistration()
         }
       }
       break;
-      case Rigid:
-      {
+      case Rigid: {
         typedef typename RigidTransformTraits<TComputeType, VImageDimension>::TransformType RigidTransformType;
 
         if (stageMetricList[0].m_MetricType != IGDM)
@@ -1546,8 +1534,7 @@ RegistrationHelper<TComputeType, VImageDimension>::DoRegistration()
         }
       }
       break;
-      case CompositeAffine:
-      {
+      case CompositeAffine: {
         typedef typename CompositeAffineTransformTraits<TComputeType, VImageDimension>::TransformType
           CompositeAffineTransformType;
 
@@ -1607,8 +1594,7 @@ RegistrationHelper<TComputeType, VImageDimension>::DoRegistration()
         }
       }
       break;
-      case Similarity:
-      {
+      case Similarity: {
         typedef
           typename SimilarityTransformTraits<TComputeType, VImageDimension>::TransformType SimilarityTransformType;
 
@@ -1662,8 +1648,7 @@ RegistrationHelper<TComputeType, VImageDimension>::DoRegistration()
         }
       }
       break;
-      case Translation:
-      {
+      case Translation: {
         typedef itk::TranslationTransform<RealType, VImageDimension> TranslationTransformType;
 
         if (stageMetricList[0].m_MetricType != IGDM)
@@ -1716,8 +1701,7 @@ RegistrationHelper<TComputeType, VImageDimension>::DoRegistration()
         }
       }
       break;
-      case GaussianDisplacementField:
-      {
+      case GaussianDisplacementField: {
         if (stageMetricList[0].m_MetricType == IGDM)
         {
           this->Logger() << "Intensity point set metric is not implemented yet for the specified transform."
@@ -1765,7 +1749,7 @@ RegistrationHelper<TComputeType, VImageDimension>::DoRegistration()
 
         typedef itk::GaussianSmoothingOnUpdateDisplacementFieldTransformParametersAdaptor<
           GaussianDisplacementFieldTransformType>
-                                                                                             DisplacementFieldTransformAdaptorType;
+          DisplacementFieldTransformAdaptorType;
         typename DisplacementFieldRegistrationType::TransformParametersAdaptorsContainerType adaptors;
 
         RealType varianceForUpdateField =
@@ -1829,8 +1813,7 @@ RegistrationHelper<TComputeType, VImageDimension>::DoRegistration()
         this->m_AllPreviousTransformsAreLinear = false;
       }
       break;
-      case BSplineDisplacementField:
-      {
+      case BSplineDisplacementField: {
         if (stageMetricList[0].m_MetricType == IGDM)
         {
           this->Logger() << "Intensity point set metric is not implemented yet for the specified transform."
@@ -1962,8 +1945,7 @@ RegistrationHelper<TComputeType, VImageDimension>::DoRegistration()
         this->m_AllPreviousTransformsAreLinear = false;
       }
       break;
-      case SyN:
-      {
+      case SyN: {
         if (stageMetricList[0].m_MetricType == IGDM)
         {
           this->Logger() << "Intensity point set metric is not implemented yet for the specified transform."
@@ -2013,7 +1995,7 @@ RegistrationHelper<TComputeType, VImageDimension>::DoRegistration()
         // Create the transform adaptors
 
         typedef itk::DisplacementFieldTransformParametersAdaptor<DisplacementFieldTransformType>
-                                                                                             DisplacementFieldTransformAdaptorType;
+          DisplacementFieldTransformAdaptorType;
         typename DisplacementFieldRegistrationType::TransformParametersAdaptorsContainerType adaptors;
         // Create the transform adaptors
         // For the gaussian displacement field, the specified variances are in image spacing terms
@@ -2198,8 +2180,7 @@ RegistrationHelper<TComputeType, VImageDimension>::DoRegistration()
         this->m_AllPreviousTransformsAreLinear = false;
       }
       break;
-      case BSplineSyN:
-      {
+      case BSplineSyN: {
         typedef itk::BSplineSmoothingOnUpdateDisplacementFieldTransform<RealType, VImageDimension>
           BSplineDisplacementFieldTransformType;
 
@@ -2464,8 +2445,7 @@ RegistrationHelper<TComputeType, VImageDimension>::DoRegistration()
         this->m_AllPreviousTransformsAreLinear = false;
       }
       break;
-      case TimeVaryingVelocityField:
-      {
+      case TimeVaryingVelocityField: {
         typedef itk::Vector<RealType, VImageDimension> VectorType;
         VectorType                                     zeroVector(0.0);
 
@@ -2698,8 +2678,7 @@ RegistrationHelper<TComputeType, VImageDimension>::DoRegistration()
         this->m_AllPreviousTransformsAreLinear = false;
       }
       break;
-      case TimeVaryingBSplineVelocityField:
-      {
+      case TimeVaryingBSplineVelocityField: {
         typedef itk::Vector<RealType, VImageDimension> VectorType;
         VectorType                                     zeroVector(0.0);
 
@@ -2827,7 +2806,7 @@ RegistrationHelper<TComputeType, VImageDimension>::DoRegistration()
           typename TimeVaryingBSplineVelocityFieldOutputTransformType::VelocityFieldPointType
             sampledVelocityFieldOrigin;
           typename TimeVaryingBSplineVelocityFieldOutputTransformType::VelocityFieldSpacingType
-                                                                                             sampledVelocityFieldSpacing;
+            sampledVelocityFieldSpacing;
           typename TimeVaryingBSplineVelocityFieldOutputTransformType::VelocityFieldSizeType sampledVelocityFieldSize;
           typename TimeVaryingBSplineVelocityFieldOutputTransformType::VelocityFieldDirectionType
             sampledVelocityFieldDirection;
@@ -2986,7 +2965,7 @@ RegistrationHelper<TComputeType, VImageDimension>::DoRegistration()
           typename TimeVaryingBSplineVelocityFieldOutputTransformType::VelocityFieldPointType
             sampledVelocityFieldOrigin;
           typename TimeVaryingBSplineVelocityFieldOutputTransformType::VelocityFieldSpacingType
-                                                                                             sampledVelocityFieldSpacing;
+            sampledVelocityFieldSpacing;
           typename TimeVaryingBSplineVelocityFieldOutputTransformType::VelocityFieldSizeType sampledVelocityFieldSize;
           typename TimeVaryingBSplineVelocityFieldOutputTransformType::VelocityFieldDirectionType
             sampledVelocityFieldDirection;
@@ -3078,8 +3057,7 @@ RegistrationHelper<TComputeType, VImageDimension>::DoRegistration()
         this->m_AllPreviousTransformsAreLinear = false;
       }
       break;
-      case Exponential:
-      {
+      case Exponential: {
         typedef itk::Vector<RealType, VImageDimension> VectorType;
         VectorType                                     zeroVector(0.0);
 
@@ -3119,7 +3097,7 @@ RegistrationHelper<TComputeType, VImageDimension>::DoRegistration()
         // Create the transform adaptors
 
         typedef itk::GaussianExponentialDiffeomorphicTransformParametersAdaptor<GaussianDisplacementFieldTransformType>
-                                                                                             DisplacementFieldTransformAdaptorType;
+          DisplacementFieldTransformAdaptorType;
         typename DisplacementFieldRegistrationType::TransformParametersAdaptorsContainerType adaptors;
 
         // Extract parameters
@@ -3242,8 +3220,7 @@ RegistrationHelper<TComputeType, VImageDimension>::DoRegistration()
         this->m_AllPreviousTransformsAreLinear = false;
       }
       break;
-      case BSplineExponential:
-      {
+      case BSplineExponential: {
         typedef itk::Vector<RealType, VImageDimension>  VectorType;
         VectorType                                      zeroVector(0.0);
         typedef itk::Image<VectorType, VImageDimension> ConstantVelocityFieldType;
@@ -3424,8 +3401,7 @@ RegistrationHelper<TComputeType, VImageDimension>::DoRegistration()
         this->m_AllPreviousTransformsAreLinear = false;
       }
       break;
-      case BSpline:
-      {
+      case BSpline: {
         constexpr unsigned int                                                SplineOrder = 3;
         typedef itk::BSplineTransform<RealType, VImageDimension, SplineOrder> BSplineTransformType;
         typedef itk::
@@ -3714,13 +3690,13 @@ RegistrationHelper<TComputeType, VImageDimension>::CalculateMeshSizeForSpecified
   {
     if (itk::Math::FloatAlmostEqual(knotSpacing, itk::NumericTraits<PixelType>::ZeroValue()))
     {
-    meshSize.push_back(itk::NumericTraits<unsigned int>::ZeroValue());
+      meshSize.push_back(itk::NumericTraits<unsigned int>::ZeroValue());
     }
     else
     {
-    RealType domain = static_cast<RealType>(inputImage->GetLargestPossibleRegion().GetSize()[d] - 1) *
-                      static_cast<RealType>(inputImage->GetSpacing()[d]);
-    meshSize.push_back(static_cast<unsigned int>(std::ceil(domain / knotSpacing)));
+      RealType domain = static_cast<RealType>(inputImage->GetLargestPossibleRegion().GetSize()[d] - 1) *
+                        static_cast<RealType>(inputImage->GetSpacing()[d]);
+      meshSize.push_back(static_cast<unsigned int>(std::ceil(domain / knotSpacing)));
     }
     //     unsigned long extraPadding = static_cast<unsigned long>(
     //       ( numberOfSpans * splineDistance - domain ) / inputImage->GetSpacing()[d] + 0.5 );
@@ -4235,11 +4211,10 @@ RegistrationHelper<TComputeType, VImageDimension>::PrintState() const
                      << "     Moving image = " << curMetric.m_MovingImage << std::endl
                      << "     Weighting = " << curMetric.m_Weighting << std::endl
                      << "     Sampling strategy = "
-                     << (curMetric.m_SamplingStrategy == random
-                           ? "random"
-                           : (curMetric.m_SamplingStrategy == regular)
-                               ? "regular"
-                               : (curMetric.m_SamplingStrategy == none) ? "none" : "WARNING: UNKNOWN")
+                     << (curMetric.m_SamplingStrategy == random      ? "random"
+                         : (curMetric.m_SamplingStrategy == regular) ? "regular"
+                         : (curMetric.m_SamplingStrategy == none)    ? "none"
+                                                                     : "WARNING: UNKNOWN")
                      << std::endl
                      << "     Number of bins = " << curMetric.m_NumberOfBins << std::endl
                      << "     Radius = " << curMetric.m_Radius << std::endl

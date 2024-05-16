@@ -15,7 +15,7 @@
 #include "itkImageToImageMetricv4.h"
 #include "itkJointHistogramMutualInformationImageToImageMetricv4.h"
 #include "itkLandmarkBasedTransformInitializer.h"
-#include "itkLinearInterpolateImageFunction.h"
+#include "itkRandomLinearInterpolateImageFunction.h"
 #include "itkMattesMutualInformationImageToImageMetricv4.h"
 #include "itkMersenneTwisterRandomVariateGenerator.h"
 #include "itkMultiScaleLaplacianBlobDetectorImageFilter.h"
@@ -381,7 +381,7 @@ GetBlobCorrespondenceMatrix(typename TImage::Pointer            fixedImage,
     weight /= weightSum;
   }
 
-  using ScalarInterpolatorType = itk::LinearInterpolateImageFunction<ImageType, RealType>;
+  using ScalarInterpolatorType = itk::RandomLinearInterpolateImageFunction<ImageType, RealType>;
   typename ScalarInterpolatorType::Pointer movingInterpolator = ScalarInterpolatorType::New();
   movingInterpolator->SetInputImage(movingImage);
 
@@ -1268,8 +1268,7 @@ antsAI(itk::ants::CommandLineParser * parser)
 
     switch (samplingStrategy)
     {
-      case REGULAR:
-      {
+      case REGULAR: {
         const auto    sampleCount = static_cast<unsigned long>(std::ceil(1.0 / samplingPercentage));
         unsigned long count =
           sampleCount; // Start at sampleCount to keep behavior backwards identical, using first element.
@@ -1298,8 +1297,7 @@ antsAI(itk::ants::CommandLineParser * parser)
         }
         break;
       }
-      case RANDOM:
-      {
+      case RANDOM: {
         const unsigned long totalVirtualDomainVoxels = fixedImage->GetRequestedRegion().GetNumberOfPixels();
         const auto          sampleCount = static_cast<unsigned long>(static_cast<float>(totalVirtualDomainVoxels) *
                                                             static_cast<float>(samplingPercentage));
@@ -1520,7 +1518,7 @@ antsAI(itk::ants::CommandLineParser * parser)
     multiStartObserver->SetOptimizer(multiStartOptimizer);
   }
 
-   multiStartOptimizer->StartOptimization();
+  multiStartOptimizer->StartOptimization();
 
 
   /////////////////////////////////////////////////////////////////
@@ -1593,9 +1591,9 @@ InitializeCommandLineOptions(itk::ants::CommandLineParser * parser)
   }
 
   {
-    std::string description =
-      std::string("These image metrics are available:  ") +
-      std::string("Mattes: Mattes mutual information (recommended), GC:  global correlation,  MI:  joint histogram mutual information");
+    std::string description = std::string("These image metrics are available:  ") +
+                              std::string("Mattes: Mattes mutual information (recommended), GC:  global correlation,  "
+                                          "MI:  joint histogram mutual information");
 
     OptionType::Pointer option = OptionType::New();
     option->SetLongName("metric");
@@ -1869,18 +1867,15 @@ antsAI(std::vector<std::string> args, std::ostream * /*out_stream = nullptr */)
 
   switch (dimension)
   {
-    case 2:
-    {
+    case 2: {
       return antsAI<2>(parser);
       break;
     }
-    case 3:
-    {
+    case 3: {
       return antsAI<3>(parser);
       break;
     }
-    default:
-    {
+    default: {
       std::cerr << "Unrecognized dimensionality.  Please see help menu." << std::endl;
       return EXIT_FAILURE;
     }

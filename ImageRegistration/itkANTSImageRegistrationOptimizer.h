@@ -651,7 +651,7 @@ public:
       iddir[i][i] = 1;
     }
 
-    typedef itk::LinearInterpolateImageFunction<ImageType, TComp>          InterpolatorType1;
+    typedef itk::RandomLinearInterpolateImageFunction<ImageType, TComp>    InterpolatorType1;
     typedef itk::NearestNeighborInterpolateImageFunction<ImageType, TComp> InterpolatorType2;
     typedef itk::BSplineInterpolateImageFunction<ImageType, TComp>         InterpolatorType3;
     typename InterpolatorType1::Pointer                                    interp1 = InterpolatorType1::New();
@@ -1767,7 +1767,8 @@ public:
   // void CopyOrAddToVelocityField( DisplacementFieldPointer update,  unsigned int timeindex,  bool
   // CopyIsTrueOtherwiseAdd);
 
-  void ElasticRegistrationUpdate(ImagePointer /* fixedImage */, ImagePointer /* xxxxmovingImage */)
+  void
+  ElasticRegistrationUpdate(ImagePointer /* fixedImage */, ImagePointer /* xxxxmovingImage */)
   {
     VectorType zero;
     zero.Fill(0);
@@ -1786,8 +1787,7 @@ public:
 
     if (this->m_Debug)
     {
-      std::cout << " updated elast "
-                << " up-sz " << updateField->GetLargestPossibleRegion() << std::endl;
+      std::cout << " updated elast " << " up-sz " << updateField->GetLargestPossibleRegion() << std::endl;
       std::cout << " t-sz " << this->m_DisplacementField->GetLargestPossibleRegion() << std::endl;
     }
     this->SmoothDisplacementField(this->m_DisplacementField, false);
@@ -2067,11 +2067,11 @@ protected:
     typedef typename DisplacementFieldType::SizeType            SizeType;
     typedef ImageRegionIteratorWithIndex<DisplacementFieldType> Iterator;
     // all we have to do here is add the local field to the global field.
-    Iterator      vfIter(field, field->GetLargestPossibleRegion());
-    SizeType      size = field->GetLargestPossibleRegion().GetSize();
+    Iterator vfIter(field, field->GetLargestPossibleRegion());
+    SizeType size = field->GetLargestPossibleRegion().GetSize();
     // unsigned long ct = 1;
-    TReal         totalmag = 0;
-    TReal         maxstep = 0;
+    TReal totalmag = 0;
+    TReal maxstep = 0;
     //  this->m_EuclideanNorm=0;
 
     typename ImageType::SpacingType myspacing = field->GetSpacing();

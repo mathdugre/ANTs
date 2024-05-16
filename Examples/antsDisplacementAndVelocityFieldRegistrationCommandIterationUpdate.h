@@ -160,7 +160,7 @@ public:
       else
       {
         this->Logger() << " "; // if the output of current iteration is written to disk, and star
-      }                        // will appear before line, else a free space will be printed to keep visual alignment.
+      } // will appear before line, else a free space will be printed to keep visual alignment.
 
       std::streamsize ss = std::cout.precision();
 
@@ -430,7 +430,7 @@ public:
     outputCompositTransform->SetOnlyMostRecentTransformToOptimizeOn();
 
     // Now we use the output transform to get warped image using linear interpolation
-    typedef itk::LinearInterpolateImageFunction<MovingImageType, RealType> LinearInterpolatorType;
+    typedef itk::RandomLinearInterpolateImageFunction<MovingImageType, RealType> LinearInterpolatorType;
     typename LinearInterpolatorType::Pointer linearInterpolator = LinearInterpolatorType::New();
 
     typedef itk::ResampleImageFilter<FixedImageType, MovingImageType, RealType> ResampleFilterType;

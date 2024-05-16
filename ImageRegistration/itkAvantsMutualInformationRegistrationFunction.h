@@ -26,7 +26,7 @@
 #include "itkBSplineDerivativeKernelFunction.h"
 #include "itkCentralDifferenceImageFunction.h"
 #include "itkBSplineInterpolateImageFunction.h"
-#include "itkLinearInterpolateImageFunction.h"
+#include "itkRandomLinearInterpolateImageFunction.h"
 #include "itkTranslationTransform.h"
 #include "itkArray2D.h"
 #include "itkImageBase.h"
@@ -162,13 +162,13 @@ public:
 
   /** Interpolator type. */
   typedef double CoordRepType;
-  typedef //       //    LinearInterpolateImageFunction<MovingImageType,CoordRepType>
+  typedef //       //    RandomLinearInterpolateImageFunction<MovingImageType,CoordRepType>
     BSplineInterpolateImageFunction<MovingImageType, CoordRepType>
                                                InterpolatorType;
   typedef typename InterpolatorType::Pointer   InterpolatorPointer;
   typedef typename InterpolatorType::PointType PointType;
   typedef InterpolatorType                     DefaultInterpolatorType;
-  //  typedef LinearInterpolateImageFunction<MovingImageType,CoordRepType>
+  //  typedef RandomLinearInterpolateImageFunction<MovingImageType,CoordRepType>
   // DefaultInterpolatorType;
 
   /** Covariant vector type. */
@@ -461,9 +461,9 @@ public:
 case you need it to be normalized. 3- The Natural logarithm is changed to log2. 4- In the ComputeMutualInformation() the
 iterator range has been changed to cover the entire PDF. 5- In the FitIndexInBins() the truncation by floor has been
 modified to round. 6- The normalization is done based on NomberOfHistogramBins-1 instead of NomberOfHistogramBins. */
-    float         px, py, pxy;
-    double        mival = 0;
-    double        mi;
+    float  px, py, pxy;
+    double mival = 0;
+    double mi;
     // unsigned long ct = 0;
 
     typename JointPDFType::IndexType index;
@@ -796,11 +796,11 @@ private:
   double m_NormalizeMetric;
   float  m_Normalizer;
 
-  typedef LinearInterpolateImageFunction<JointPDFType, double> pdfintType;
-  typename pdfintType::Pointer                                 pdfinterpolator;
+  typedef RandomLinearInterpolateImageFunction<JointPDFType, double> pdfintType;
+  typename pdfintType::Pointer                                       pdfinterpolator;
 
-  typedef LinearInterpolateImageFunction<JointPDFDerivativesType, double> dpdfintType;
-  typename dpdfintType::Pointer                                           dpdfinterpolator;
+  typedef RandomLinearInterpolateImageFunction<JointPDFDerivativesType, double> dpdfintType;
+  typename dpdfintType::Pointer                                                 dpdfinterpolator;
 
   typedef BSplineInterpolateImageFunction<MarginalPDFType, double> pdfintType2;
   typename pdfintType2::Pointer                                    pdfinterpolator2;

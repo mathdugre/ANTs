@@ -15,7 +15,7 @@
 #include "itkMattesMutualInformationImageToImageMetric.h"
 #include "itkCorrelationCoefficientHistogramImageToImageMetric.h"
 #include "itkMultiResolutionImageRegistrationMethod.h"
-#include "itkLinearInterpolateImageFunction.h"
+#include "itkRandomLinearInterpolateImageFunction.h"
 #include "itkANTSAffine3DTransform.h"
 #include "itkCenteredRigid2DTransform.h"
 #include "itkANTSCenteredAffine2DTransform.h"
@@ -24,7 +24,7 @@
 #include "itkTransformFileWriter.h"
 #include "itkImageRegionIteratorWithIndex.h"
 #include "itkResampleImageFilter.h"
-#include "itkLinearInterpolateImageFunction.h"
+#include "itkRandomLinearInterpolateImageFunction.h"
 #include "itkWarpImageFilter.h"
 #include "itkWarpImageWAffineFilter.h"
 #include "itkImageMomentsCalculator.h"
@@ -127,13 +127,10 @@ operator<<(std::ostream & os, const OptAffine<TAffineTransform, TMaskImage> & p)
       os << "AffineWithGradientDifference" << std::endl;
       break;
   }
-  os << "MI_bins=" << p.MI_bins << " "
-     << "MI_samples=" << p.MI_samples << std::endl;
-  os << "number_of_seeds=" << p.number_of_seeds << " "
-     << "time_seed=" << p.time_seed << std::endl;
+  os << "MI_bins=" << p.MI_bins << " " << "MI_samples=" << p.MI_samples << std::endl;
+  os << "number_of_seeds=" << p.number_of_seeds << " " << "time_seed=" << p.time_seed << std::endl;
   os << "number_of_levels=" << p.number_of_levels << std::endl;
-  os << "number_of_iteration_list="
-     << "[";
+  os << "number_of_iteration_list=" << "[";
   for (unsigned int i = 0; i < p.number_of_iteration_list.size() - 1; i++)
   {
     os << p.number_of_iteration_list[i] << ",";
@@ -143,8 +140,7 @@ operator<<(std::ostream & os, const OptAffine<TAffineTransform, TMaskImage> & p)
     os << p.number_of_iteration_list[p.number_of_iteration_list.size() - 1];
   }
   os << "]" << std::endl;
-  os << "graident_scales="
-     << "[";
+  os << "graident_scales=" << "[";
   for (unsigned int i = 0; i < p.gradient_scales.size() - 1; i++)
   {
     os << p.gradient_scales[i] << ",";
@@ -232,8 +228,7 @@ InitializeAffineOptmizationParameters(OptAffine & opt, double translationScale)
 
   switch (kImageDim)
   {
-    case 2:
-    {
+    case 2: {
       //        const double translationScale = 1.0 / 1000.0;
       opt.gradient_scales[0] = 1.0;
       opt.gradient_scales[1] = 1.0;
@@ -245,8 +240,7 @@ InitializeAffineOptmizationParameters(OptAffine & opt, double translationScale)
       opt.gradient_scales[7] = translationScale;
     }
     break;
-    case 3:
-    {
+    case 3: {
       //        const double translationScale = 1.0/1.e4;
       opt.gradient_scales[0] = 1.0; // quaternion
       opt.gradient_scales[1] = 1.0; // quaternion
@@ -449,9 +443,9 @@ ComputeSingleAffineTransform2D3D(typename ImageType::Pointer &     fixed_image,
 {
   const int ImageDimension = ImageType::ImageDimension;
 
-  typedef std::vector<typename ImageType::Pointer>               ImagePyramidType;
-  typedef itk::ImageMaskSpatialObject<ImageDimension>            ImageMaskSpatialObjectType;
-  typedef itk::LinearInterpolateImageFunction<ImageType, double> InterpolatorType;
+  typedef std::vector<typename ImageType::Pointer>                     ImagePyramidType;
+  typedef itk::ImageMaskSpatialObject<ImageDimension>                  ImageMaskSpatialObjectType;
+  typedef itk::RandomLinearInterpolateImageFunction<ImageType, double> InterpolatorType;
 
   typedef typename TransformType::ParametersType ParaType;
 
@@ -469,8 +463,7 @@ ComputeSingleAffineTransform2D3D(typename ImageType::Pointer &     fixed_image,
 
   switch (opt.metric_type)
   {
-    case AffineWithMeanSquareDifference:
-    {
+    case AffineWithMeanSquareDifference: {
       typedef itk::MeanSquaresImageToImageMetric<ImageType, ImageType> MetricType;
       typedef RunningAffineCache<ImageMaskSpatialObjectType, ImagePyramidType, MetricType, InterpolatorType>
         RunningAffineCacheType;
@@ -480,8 +473,7 @@ ComputeSingleAffineTransform2D3D(typename ImageType::Pointer &     fixed_image,
       RegisterImageAffineMutualInformationMultiResolution(running_cache, opt, para_final);
     }
     break;
-    case AffineWithHistogramCorrelation:
-    {
+    case AffineWithHistogramCorrelation: {
       typedef itk::CorrelationCoefficientHistogramImageToImageMetric<ImageType, ImageType> MetricType;
       typedef RunningAffineCache<ImageMaskSpatialObjectType, ImagePyramidType, MetricType, InterpolatorType>
         RunningAffineCacheType;
@@ -497,8 +489,7 @@ ComputeSingleAffineTransform2D3D(typename ImageType::Pointer &     fixed_image,
       RegisterImageAffineMutualInformationMultiResolution(running_cache, opt, para_final);
     }
     break;
-    case AffineWithNormalizedCorrelation:
-    {
+    case AffineWithNormalizedCorrelation: {
       typedef itk::NormalizedCorrelationImageToImageMetric<ImageType, ImageType> MetricType;
       typedef RunningAffineCache<ImageMaskSpatialObjectType, ImagePyramidType, MetricType, InterpolatorType>
         RunningAffineCacheType;
@@ -508,8 +499,7 @@ ComputeSingleAffineTransform2D3D(typename ImageType::Pointer &     fixed_image,
       RegisterImageAffineMutualInformationMultiResolution(running_cache, opt, para_final);
     }
     break;
-    case AffineWithGradientDifference:
-    {
+    case AffineWithGradientDifference: {
       typedef itk::GradientDifferenceImageToImageMetric<ImageType, ImageType> MetricType;
       typedef RunningAffineCache<ImageMaskSpatialObjectType, ImagePyramidType, MetricType, InterpolatorType>
         RunningAffineCacheType;
@@ -519,8 +509,7 @@ ComputeSingleAffineTransform2D3D(typename ImageType::Pointer &     fixed_image,
       RegisterImageAffineMutualInformationMultiResolution(running_cache, opt, para_final);
     }
     break;
-    case AffineWithMutualInformation:
-    {
+    case AffineWithMutualInformation: {
       typedef itk::MattesMutualInformationImageToImageMetric<ImageType, ImageType> MetricType;
       typedef RunningAffineCache<ImageMaskSpatialObjectType, ImagePyramidType, MetricType, InterpolatorType>
         RunningAffineCacheType;
@@ -840,8 +829,8 @@ TestCostValueMMI(ImagePointerType fixedImage,
   typedef typename itk::MattesMutualInformationImageToImageMetric<ImageType, ImageType> mattesMutualInfoMetricType;
   typename mattesMutualInfoMetricType::Pointer mattesMutualInfo = mattesMutualInfoMetricType::New();
 
-  typedef typename itk::LinearInterpolateImageFunction<ImageType, double> InterpolatorType;
-  typename InterpolatorType::Pointer                                      interpolator = InterpolatorType::New();
+  typedef typename itk::RandomLinearInterpolateImageFunction<ImageType, double> InterpolatorType;
+  typename InterpolatorType::Pointer                                            interpolator = InterpolatorType::New();
 
   interpolator->SetInputImage(movingImage);
 
