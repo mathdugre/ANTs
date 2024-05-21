@@ -15,7 +15,7 @@
 #include "itkImageToImageMetricv4.h"
 #include "itkJointHistogramMutualInformationImageToImageMetricv4.h"
 #include "itkLandmarkBasedTransformInitializer.h"
-#include "itkRandomLinearInterpolateImageFunction.h"
+#include "itkLinearInterpolateImageFunction.h"
 #include "itkMattesMutualInformationImageToImageMetricv4.h"
 #include "itkMersenneTwisterRandomVariateGenerator.h"
 #include "itkMultiScaleLaplacianBlobDetectorImageFilter.h"
@@ -381,7 +381,7 @@ GetBlobCorrespondenceMatrix(typename TImage::Pointer            fixedImage,
     weight /= weightSum;
   }
 
-  using ScalarInterpolatorType = itk::RandomLinearInterpolateImageFunction<ImageType, RealType>;
+  using ScalarInterpolatorType = itk::LinearInterpolateImageFunction<ImageType, RealType>;
   typename ScalarInterpolatorType::Pointer movingInterpolator = ScalarInterpolatorType::New();
   movingInterpolator->SetInputImage(movingImage);
 

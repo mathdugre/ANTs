@@ -23,7 +23,7 @@
 #include "itkBSplineDerivativeKernelFunction.h"
 #include "itkCentralDifferenceImageFunction.h"
 #include "itkBSplineInterpolateImageFunction.h"
-#include "itkRandomLinearInterpolateImageFunction.h"
+#include "itkLinearInterpolateImageFunction.h"
 #include "itkTranslationTransform.h"
 #include "itkArray2D.h"
 #include "itkImageBase.h"
@@ -159,13 +159,13 @@ public:
 
   /** Interpolator type. */
   typedef double CoordRepType;
-  typedef //       //    RandomLinearInterpolateImageFunction<MovingImageType,CoordRepType>
+  typedef //       //    LinearInterpolateImageFunction<MovingImageType,CoordRepType>
     BSplineInterpolateImageFunction<MovingImageType, CoordRepType>
                                                InterpolatorType;
   typedef typename InterpolatorType::Pointer   InterpolatorPointer;
   typedef typename InterpolatorType::PointType PointType;
   typedef InterpolatorType                     DefaultInterpolatorType;
-  //  typedef RandomLinearInterpolateImageFunction<MovingImageType,CoordRepType>
+  //  typedef LinearInterpolateImageFunction<MovingImageType,CoordRepType>
   // DefaultInterpolatorType;
 
   /** Covariant vector type. */

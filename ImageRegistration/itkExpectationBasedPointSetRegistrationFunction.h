@@ -28,7 +28,7 @@
 #include "itkPoint.h"
 #include "itkCovariantVector.h"
 #include "itkInterpolateImageFunction.h"
-#include "itkRandomLinearInterpolateImageFunction.h"
+#include "itkLinearInterpolateImageFunction.h"
 #include "itkCentralDifferenceImageFunction.h"
 
 namespace itk
@@ -43,7 +43,7 @@ namespace itk
  *
  * Non-integer moving image values are obtained by using
  * interpolation. The default interpolator is of type
- * RandomLinearInterpolateImageFunction. The user may set other
+ * LinearInterpolateImageFunction. The user may set other
  * interpolators via method SetMovingImageInterpolator. Note that the input
  * interpolator must derive from baseclass InterpolateImageFunction.
  *

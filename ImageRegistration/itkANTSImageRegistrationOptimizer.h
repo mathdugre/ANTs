@@ -651,7 +651,7 @@ public:
       iddir[i][i] = 1;
     }
 
-    typedef itk::RandomLinearInterpolateImageFunction<ImageType, TComp>    InterpolatorType1;
+    typedef itk::LinearInterpolateImageFunction<ImageType, TComp>          InterpolatorType1;
     typedef itk::NearestNeighborInterpolateImageFunction<ImageType, TComp> InterpolatorType2;
     typedef itk::BSplineInterpolateImageFunction<ImageType, TComp>         InterpolatorType3;
     typename InterpolatorType1::Pointer                                    interp1 = InterpolatorType1::New();

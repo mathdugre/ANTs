@@ -368,8 +368,8 @@ public:
     movingTransform->SetOnlyMostRecentTransformToOptimizeOn();
 
     // Now we apply this output transform to get warped image
-    typedef itk::RandomLinearInterpolateImageFunction<ImageType, RealType> LinearInterpolatorType;
-    typename LinearInterpolatorType::Pointer linearInterpolator = LinearInterpolatorType::New();
+    typedef itk::LinearInterpolateImageFunction<ImageType, RealType> LinearInterpolatorType;
+    typename LinearInterpolatorType::Pointer                         linearInterpolator = LinearInterpolatorType::New();
 
     typedef itk::ResampleImageFilter<ImageType, ImageType, RealType> ResampleFilterType;
     typename ResampleFilterType::Pointer                             resampler = ResampleFilterType::New();

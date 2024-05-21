@@ -24,7 +24,7 @@
 #include "itkTransformToDisplacementFieldFilter.h"
 
 #include "itkBSplineInterpolateImageFunction.h"
-#include "itkRandomLinearInterpolateImageFunction.h"
+#include "itkLinearInterpolateImageFunction.h"
 #include "itkGaussianInterpolateImageFunction.h"
 #include "itkInterpolateImageFunction.h"
 #include "itkNearestNeighborInterpolateImageFunction.h"
@@ -259,15 +259,15 @@ antsApplyTransforms(itk::ants::CommandLineParser::Pointer & parser, unsigned int
     // the -e option
 
     itk::ImageIOBase::Pointer imageIO =
-        itk::ImageIOFactory::CreateImageIO(inputFN.c_str(), itk::IOFileModeEnum::ReadMode);
+      itk::ImageIOFactory::CreateImageIO(inputFN.c_str(), itk::IOFileModeEnum::ReadMode);
 
     if (!imageIO)
     {
       // can only check files, so skip checks if using a pointer in ANTsR / ANTsPy
       if (verbose)
       {
-        std::cout << "Could not create ImageIO for the input file, assuming dimension = " << Dimension <<
-            " and scalar pixel type" << std::endl;
+        std::cout << "Could not create ImageIO for the input file, assuming dimension = " << Dimension
+                  << " and scalar pixel type" << std::endl;
       }
     }
     else
@@ -281,12 +281,12 @@ antsApplyTransforms(itk::ants::CommandLineParser::Pointer & parser, unsigned int
       if (inputDimension != Dimension)
       {
         if (verbose)
-          {
-            std::cout << "Input image dimension does not match. Expected: " << Dimension
-                    << ", but got: " << inputDimension << std::endl << "See -e option for available input types."
-                    << std::endl;
-          }
-          return EXIT_FAILURE;
+        {
+          std::cout << "Input image dimension does not match. Expected: " << Dimension
+                    << ", but got: " << inputDimension << std::endl
+                    << "See -e option for available input types." << std::endl;
+        }
+        return EXIT_FAILURE;
       }
 
       // Check if the pixel type is scalar
@@ -294,8 +294,8 @@ antsApplyTransforms(itk::ants::CommandLineParser::Pointer & parser, unsigned int
       {
         if (verbose)
         {
-          std::cout << "Image pixel type is not scalar." << std::endl << "See -e option for available input types."
-                  << std::endl;
+          std::cout << "Image pixel type is not scalar." << std::endl
+                    << "See -e option for available input types." << std::endl;
         }
         return EXIT_FAILURE;
       }
@@ -624,7 +624,8 @@ antsApplyTransforms(itk::ants::CommandLineParser::Pointer & parser, unsigned int
       {
         // HDF5 transforms must be written by a TransformFileWriter to be valid ITK transforms
         using DisplacementFieldTransformType = itk::DisplacementFieldTransform<RealType, Dimension>;
-        typename DisplacementFieldTransformType::Pointer compositeDisplacementTransform = DisplacementFieldTransformType::New();
+        typename DisplacementFieldTransformType::Pointer compositeDisplacementTransform =
+          DisplacementFieldTransformType::New();
         compositeDisplacementTransform->SetDisplacementField(converter->GetOutput());
 
         using TransformWriterType = itk::TransformFileWriterTemplate<RealType>;
@@ -1268,8 +1269,7 @@ antsApplyTransforms(std::vector<std::string> args, std::ostream * /*out_stream =
 
   switch (dimension)
   {
-    case 2:
-    {
+    case 2: {
       if (imageType == TENSOR)
       {
         if (verbose)
@@ -1317,8 +1317,7 @@ antsApplyTransforms(std::vector<std::string> args, std::ostream * /*out_stream =
       }
     }
     break;
-    case 3:
-    {
+    case 3: {
       if (useDoublePrecision)
       {
         if (!std::strcmp(outputDataType.c_str(), "char"))
@@ -1355,8 +1354,7 @@ antsApplyTransforms(std::vector<std::string> args, std::ostream * /*out_stream =
       }
     }
     break;
-    case 4:
-    {
+    case 4: {
       if (imageType == TENSOR)
       {
         if (verbose)
@@ -1410,8 +1408,7 @@ antsApplyTransforms(std::vector<std::string> args, std::ostream * /*out_stream =
       }
     }
     break;
-    default:
-    {
+    default: {
       if (verbose)
       {
         std::cerr << "Unsupported dimension" << std::endl;

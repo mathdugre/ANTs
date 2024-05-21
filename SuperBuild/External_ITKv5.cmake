@@ -152,7 +152,7 @@ if(NOT DEFINED ${extProjName}_DIR AND NOT ${USE_SYSTEM_${extProjName}})
 
   ### --- End Project specific additions
   set(${proj}_REPOSITORY ${git_protocol}://github.com/mathdugre/ITK.git)
-  set(${proj}_GIT_TAG 56bd29bff88ba48572da10812e6c14d9ae6ef583) # 2024-03-12
+  set(${proj}_GIT_TAG d5367a078f1760e15ce2916cd5c26101ca488e79) # 2024-03-12
   set(ITK_VERSION_ID ITK-5.4) ### NOTE: When updating GIT_TAG, also update ITK_VERSION_ID if ITK version has changed
 
   ExternalProject_Add(${proj}

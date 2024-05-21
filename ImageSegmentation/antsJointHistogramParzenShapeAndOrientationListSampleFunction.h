@@ -19,7 +19,7 @@
 
 #include "itkImage.h"
 #include "itkBSplineInterpolateImageFunction.h"
-#include "itkRandomLinearInterpolateImageFunction.h"
+#include "itkLinearInterpolateImageFunction.h"
 namespace itk
 {
 namespace ants
@@ -61,11 +61,11 @@ public:
   typedef typename JointHistogramImageType::Pointer   JointHistogramImagePointer;
   typedef Vector<RealType, 2>                         ThetaPsiType;
 
-  typedef typename JointHistogramImageType::IndexType                   IndexType;
-  typedef typename IndexType::IndexValueType                            IndexValueType;
-  typedef BSplineInterpolateImageFunction<JointHistogramImageType>      InterpolatorType;
-  typedef RandomLinearInterpolateImageFunction<JointHistogramImageType> LInterpolatorType;
-  typedef typename InterpolatorType::Pointer                            InterpolatorPointer;
+  typedef typename JointHistogramImageType::IndexType              IndexType;
+  typedef typename IndexType::IndexValueType                       IndexValueType;
+  typedef BSplineInterpolateImageFunction<JointHistogramImageType> InterpolatorType;
+  typedef LinearInterpolateImageFunction<JointHistogramImageType>  LInterpolatorType;
+  typedef typename InterpolatorType::Pointer                       InterpolatorPointer;
 
   /** Helper functions */
 

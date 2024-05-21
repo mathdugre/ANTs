@@ -13,7 +13,7 @@
 #include "antsUtilities.h"
 #include "itkantsRegistrationHelper.h"
 #include "itkBSplineInterpolateImageFunction.h"
-#include "itkRandomLinearInterpolateImageFunction.h"
+#include "itkLinearInterpolateImageFunction.h"
 #include "itkGaussianInterpolateImageFunction.h"
 #include "itkNearestNeighborInterpolateImageFunction.h"
 #include "itkWindowedSincInterpolateImageFunction.h"
@@ -471,8 +471,7 @@ DoRegistration(typename ParserType::Pointer & parser)
   unsigned int numShrinkFactorFunctions = shrinkFactorsOption->GetNumberOfFunctions();
   unsigned int numConvergenceFunctions = convergenceOption->GetNumberOfFunctions();
 
-  if (numSmoothingSigmaFunctions != numShrinkFactorFunctions ||
-      numShrinkFactorFunctions != numConvergenceFunctions ||
+  if (numSmoothingSigmaFunctions != numShrinkFactorFunctions || numShrinkFactorFunctions != numConvergenceFunctions ||
       numConvergenceFunctions != numberOfTransforms)
   {
     if (verbose)
@@ -631,33 +630,27 @@ DoRegistration(typename ParserType::Pointer & parser)
 
     switch (xfrmMethod)
     {
-      case RegistrationHelperType::Affine:
-      {
+      case RegistrationHelperType::Affine: {
         regHelper->AddAffineTransform(learningRate);
       }
       break;
-      case RegistrationHelperType::Rigid:
-      {
+      case RegistrationHelperType::Rigid: {
         regHelper->AddRigidTransform(learningRate);
       }
       break;
-      case RegistrationHelperType::CompositeAffine:
-      {
+      case RegistrationHelperType::CompositeAffine: {
         regHelper->AddCompositeAffineTransform(learningRate);
       }
       break;
-      case RegistrationHelperType::Similarity:
-      {
+      case RegistrationHelperType::Similarity: {
         regHelper->AddSimilarityTransform(learningRate);
       }
       break;
-      case RegistrationHelperType::Translation:
-      {
+      case RegistrationHelperType::Translation: {
         regHelper->AddTranslationTransform(learningRate);
       }
       break;
-      case RegistrationHelperType::GaussianDisplacementField:
-      {
+      case RegistrationHelperType::GaussianDisplacementField: {
         const float varianceForUpdateField =
           parser->Convert<float>(transformOption->GetFunction(currentStage)->GetParameter(1));
         const float varianceForTotalField =
@@ -665,8 +658,7 @@ DoRegistration(typename ParserType::Pointer & parser)
         regHelper->AddGaussianDisplacementFieldTransform(learningRate, varianceForUpdateField, varianceForTotalField);
       }
       break;
-      case RegistrationHelperType::BSplineDisplacementField:
-      {
+      case RegistrationHelperType::BSplineDisplacementField: {
         unsigned int splineOrder = 3;
         if (transformOption->GetFunction(currentStage)->GetNumberOfParameters() > 3)
         {
@@ -713,8 +705,7 @@ DoRegistration(typename ParserType::Pointer & parser)
           learningRate, meshSizeForTheUpdateField, meshSizeForTheTotalField, splineOrder);
       }
       break;
-      case RegistrationHelperType::BSpline:
-      {
+      case RegistrationHelperType::BSpline: {
         std::vector<unsigned int> meshSizeAtBaseLevel =
           parser->ConvertVector<unsigned int>(transformOption->GetFunction(currentStage)->GetParameter(1));
         if (meshSizeAtBaseLevel.size() == 1)
@@ -729,8 +720,7 @@ DoRegistration(typename ParserType::Pointer & parser)
         regHelper->AddBSplineTransform(learningRate, meshSizeAtBaseLevel);
       }
       break;
-      case RegistrationHelperType::TimeVaryingVelocityField:
-      {
+      case RegistrationHelperType::TimeVaryingVelocityField: {
         unsigned int numberOfTimeIndices =
           parser->Convert<unsigned int>(transformOption->GetFunction(0)->GetParameter(1));
 
@@ -750,8 +740,7 @@ DoRegistration(typename ParserType::Pointer & parser)
                                                         varianceForTotalFieldTime);
       }
       break;
-      case RegistrationHelperType::TimeVaryingBSplineVelocityField:
-      {
+      case RegistrationHelperType::TimeVaryingBSplineVelocityField: {
         std::vector<unsigned int> meshSize =
           parser->ConvertVector<unsigned int>(transformOption->GetFunction(0)->GetParameter(1));
 
@@ -771,8 +760,7 @@ DoRegistration(typename ParserType::Pointer & parser)
           learningRate, meshSize, numberOfTimePointSamples, splineOrder);
       }
       break;
-      case RegistrationHelperType::SyN:
-      {
+      case RegistrationHelperType::SyN: {
         float varianceForUpdateField = 3.0;
         if (transformOption->GetFunction(currentStage)->GetNumberOfParameters() > 1)
         {
@@ -786,8 +774,7 @@ DoRegistration(typename ParserType::Pointer & parser)
         regHelper->AddSyNTransform(learningRate, varianceForUpdateField, varianceForTotalField);
       }
       break;
-      case RegistrationHelperType::BSplineSyN:
-      {
+      case RegistrationHelperType::BSplineSyN: {
         unsigned int splineOrder = 3;
         if (transformOption->GetFunction(currentStage)->GetNumberOfParameters() > 3)
         {
@@ -845,8 +832,7 @@ DoRegistration(typename ParserType::Pointer & parser)
           learningRate, meshSizeForTheUpdateField, meshSizeForTheTotalField, splineOrder);
       }
       break;
-      case RegistrationHelperType::Exponential:
-      {
+      case RegistrationHelperType::Exponential: {
         const float varianceForUpdateField =
           parser->Convert<float>(transformOption->GetFunction(currentStage)->GetParameter(1));
         const float varianceForVelocityField =
@@ -862,8 +848,7 @@ DoRegistration(typename ParserType::Pointer & parser)
           learningRate, varianceForUpdateField, varianceForVelocityField, numberOfIntegrationSteps);
       }
       break;
-      case RegistrationHelperType::BSplineExponential:
-      {
+      case RegistrationHelperType::BSplineExponential: {
         unsigned int splineOrder = 3;
         if (transformOption->GetFunction(currentStage)->GetNumberOfParameters() > 4)
         {
@@ -917,12 +902,10 @@ DoRegistration(typename ParserType::Pointer & parser)
           learningRate, meshSizeForTheUpdateField, meshSizeForTheVelocityField, numberOfIntegrationSteps, splineOrder);
       }
       break;
-      default:
-      {
+      default: {
         if (verbose)
         {
-          std::cerr << "Unknown registration method "
-                    << "\"" << whichTransform << "\"" << std::endl;
+          std::cerr << "Unknown registration method " << "\"" << whichTransform << "\"" << std::endl;
         }
         return EXIT_FAILURE;
       }

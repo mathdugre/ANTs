@@ -26,7 +26,7 @@
 #include "itkBSplineDerivativeKernelFunction.h"
 #include "itkCentralDifferenceImageFunction.h"
 #include "itkBSplineInterpolateImageFunction.h"
-#include "itkRandomLinearInterpolateImageFunction.h"
+#include "itkLinearInterpolateImageFunction.h"
 #include "itkTranslationTransform.h"
 #include "itkArray2D.h"
 #include "itkImageBase.h"
@@ -162,13 +162,13 @@ public:
 
   /** Interpolator type. */
   typedef double CoordRepType;
-  typedef //       //    RandomLinearInterpolateImageFunction<MovingImageType,CoordRepType>
+  typedef //       //    LinearInterpolateImageFunction<MovingImageType,CoordRepType>
     BSplineInterpolateImageFunction<MovingImageType, CoordRepType>
                                                InterpolatorType;
   typedef typename InterpolatorType::Pointer   InterpolatorPointer;
   typedef typename InterpolatorType::PointType PointType;
   typedef InterpolatorType                     DefaultInterpolatorType;
-  //  typedef RandomLinearInterpolateImageFunction<MovingImageType,CoordRepType>
+  //  typedef LinearInterpolateImageFunction<MovingImageType,CoordRepType>
   // DefaultInterpolatorType;
 
   /** Covariant vector type. */
@@ -796,11 +796,11 @@ private:
   double m_NormalizeMetric;
   float  m_Normalizer;
 
-  typedef RandomLinearInterpolateImageFunction<JointPDFType, double> pdfintType;
-  typename pdfintType::Pointer                                       pdfinterpolator;
+  typedef LinearInterpolateImageFunction<JointPDFType, double> pdfintType;
+  typename pdfintType::Pointer                                 pdfinterpolator;
 
-  typedef RandomLinearInterpolateImageFunction<JointPDFDerivativesType, double> dpdfintType;
-  typename dpdfintType::Pointer                                                 dpdfinterpolator;
+  typedef LinearInterpolateImageFunction<JointPDFDerivativesType, double> dpdfintType;
+  typename dpdfintType::Pointer                                           dpdfinterpolator;
 
   typedef BSplineInterpolateImageFunction<MarginalPDFType, double> pdfintType2;
   typename pdfintType2::Pointer                                    pdfinterpolator2;

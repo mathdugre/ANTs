@@ -637,7 +637,7 @@ LaplacianThicknessExpDiff2(int argc, char * argv[])
   using DefaultInterpolatorType = itk::VectorLinearInterpolateImageFunction<TimeVaryingVelocityFieldType, RealType>;
   typename DefaultInterpolatorType::Pointer vinterp = DefaultInterpolatorType::New();
   vinterp->SetInputImage(lapgrad);
-  using ScalarInterpolatorType = itk::RandomLinearInterpolateImageFunction<ImageType, RealType>;
+  using ScalarInterpolatorType = itk::LinearInterpolateImageFunction<ImageType, RealType>;
   typename ScalarInterpolatorType::Pointer ginterp = ScalarInterpolatorType::New();
   typename ScalarInterpolatorType::Pointer winterp = ScalarInterpolatorType::New();
   winterp->SetInputImage(wm);

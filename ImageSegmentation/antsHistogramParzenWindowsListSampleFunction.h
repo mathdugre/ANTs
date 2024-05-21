@@ -19,7 +19,7 @@
 
 #include "itkImage.h"
 #include "itkBSplineInterpolateImageFunction.h"
-#include "itkRandomLinearInterpolateImageFunction.h"
+#include "itkLinearInterpolateImageFunction.h"
 
 namespace itk
 {
@@ -57,10 +57,10 @@ public:
   typedef TOutput RealType;
   typedef TOutput OutputType;
 
-  typedef Image<RealType, 1>                                       HistogramImageType;
-  typedef BSplineInterpolateImageFunction<HistogramImageType>      InterpolatorType;
-  typedef RandomLinearInterpolateImageFunction<HistogramImageType> LInterpolatorType;
-  typedef typename InterpolatorType::Pointer                       InterpolatorPointer;
+  typedef Image<RealType, 1>                                  HistogramImageType;
+  typedef BSplineInterpolateImageFunction<HistogramImageType> InterpolatorType;
+  typedef LinearInterpolateImageFunction<HistogramImageType>  LInterpolatorType;
+  typedef typename InterpolatorType::Pointer                  InterpolatorPointer;
 
   /** Helper functions */
 

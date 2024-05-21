@@ -62,7 +62,7 @@
 #include "itkJensenHavrdaCharvatTsallisPointSetToPointSetMetricv4.h"
 #include "itkJointHistogramMutualInformationImageToImageMetricv4.h"
 #include "itkLabeledPointSetToPointSetMetricv4.h"
-#include "itkRandomLinearInterpolateImageFunction.h"
+#include "itkLinearInterpolateImageFunction.h"
 #include "itkMatrixOffsetTransformBase.h"
 #include "itkMattesMutualInformationImageToImageMetricv4.h"
 #include "itkMeanSquaresImageToImageMetricv4.h"
@@ -216,8 +216,7 @@ public:
            bool                    useAnisotropicCovariances,
            RealType                samplingPercentage,
            RealType                intensityDistanceSigma,
-           RealType                euclideanDistanceSigma
-           )
+           RealType                euclideanDistanceSigma)
       : m_MetricType(metricType)
       , m_FixedImage(fixedImage)
       , m_MovingImage(movingImage)
@@ -246,48 +245,37 @@ public:
     {
       switch (this->m_MetricType)
       {
-        case CC:
-        {
+        case CC: {
           return std::string("CC");
         }
-        case MI:
-        {
+        case MI: {
           return std::string("JointHistogramMI");
         }
-        case Mattes:
-        {
+        case Mattes: {
           return std::string("MattesMI");
         }
-        case MeanSquares:
-        {
+        case MeanSquares: {
           return std::string("MeanSquares");
         }
-        case Demons:
-        {
+        case Demons: {
           return std::string("Demons");
         }
-        case GC:
-        {
+        case GC: {
           return std::string("GC");
         }
-        case ICP:
-        {
+        case ICP: {
           return std::string("ICP");
         }
-        case PSE:
-        {
+        case PSE: {
           return std::string("PSE");
         }
-        case JHCT:
-        {
+        case JHCT: {
           return std::string("JHCT");
         }
-        case IGDM:
-        {
+        case IGDM: {
           return std::string("IGDM");
         }
-        default:
-        {
+        default: {
         }
         break;
       }
@@ -368,60 +356,46 @@ public:
     {
       switch (this->m_XfrmMethod)
       {
-        case Rigid:
-        {
+        case Rigid: {
           return std::string("Rigid");
         }
-        case Affine:
-        {
+        case Affine: {
           return std::string("Affine");
         }
-        case CompositeAffine:
-        {
+        case CompositeAffine: {
           return std::string("CompositeAffine");
         }
-        case Similarity:
-        {
+        case Similarity: {
           return std::string("Similarity");
         }
-        case Translation:
-        {
+        case Translation: {
           return std::string("Translation");
         }
-        case BSpline:
-        {
+        case BSpline: {
           return std::string("BSpline");
         }
-        case GaussianDisplacementField:
-        {
+        case GaussianDisplacementField: {
           return std::string("GaussianDisplacementField");
         }
-        case BSplineDisplacementField:
-        {
+        case BSplineDisplacementField: {
           return std::string("BSplineDisplacementField");
         }
-        case TimeVaryingVelocityField:
-        {
+        case TimeVaryingVelocityField: {
           return std::string("TimeVaryingVelocityField");
         }
-        case TimeVaryingBSplineVelocityField:
-        {
+        case TimeVaryingBSplineVelocityField: {
           return std::string("TimeVaryingBSplineVelocityField");
         }
-        case SyN:
-        {
+        case SyN: {
           return std::string("SyN");
         }
-        case BSplineSyN:
-        {
+        case BSplineSyN: {
           return std::string("BSplineSyN");
         }
-        case Exponential:
-        {
+        case Exponential: {
           return std::string("Exponential");
         }
-        case BSplineExponential:
-        {
+        case BSplineExponential: {
           return std::string("BSplineExponential");
         }
         case UnknownXfrm:

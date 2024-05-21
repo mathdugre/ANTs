@@ -13,7 +13,7 @@
 #include "itkConstantBoundaryCondition.h"
 #include "itkIdentityTransform.h"
 #include "itkBSplineInterpolateImageFunction.h"
-#include "itkRandomLinearInterpolateImageFunction.h"
+#include "itkLinearInterpolateImageFunction.h"
 #include "itkGaussianInterpolateImageFunction.h"
 #include "itkNearestNeighborInterpolateImageFunction.h"
 #include "itkWindowedSincInterpolateImageFunction.h"
@@ -38,7 +38,7 @@ ResampleImage(int argc, char * argv[])
   typename TransformType::Pointer transform = TransformType::New();
   transform->SetIdentity();
 
-  using LinearInterpolatorType = itk::RandomLinearInterpolateImageFunction<ImageType, RealType>;
+  using LinearInterpolatorType = itk::LinearInterpolateImageFunction<ImageType, RealType>;
   typename LinearInterpolatorType::Pointer interpolator = LinearInterpolatorType::New();
   interpolator->SetInputImage(image);
 

@@ -71,7 +71,7 @@
 
 // Headers for interpolating functions (to support the --interpolation choice)
 #include "itkBSplineInterpolateImageFunction.h"
-#include "itkRandomLinearInterpolateImageFunction.h"
+#include "itkLinearInterpolateImageFunction.h"
 #include "itkInterpolateImageFunction.h"
 #include "itkNearestNeighborInterpolateImageFunction.h"
 #include "itkWindowedSincInterpolateImageFunction.h"
@@ -555,7 +555,7 @@ ants_motion(itk::ants::CommandLineParser * parser)
 
   if (!std::strcmp(whichInterpolator.c_str(), "linear"))
   {
-    using LinearInterpolatorType = itk::RandomLinearInterpolateImageFunction<ImageType, RealType>;
+    using LinearInterpolatorType = itk::LinearInterpolateImageFunction<ImageType, RealType>;
     typename LinearInterpolatorType::Pointer linearInterpolator = LinearInterpolatorType::New();
     interpolator = linearInterpolator;
   }

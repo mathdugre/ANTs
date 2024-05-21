@@ -25,7 +25,7 @@
 #include "itkImageFileReader.h"
 #include "itkImageFileWriter.h"
 #include "itkLabeledPointSetFileReader.h"
-#include "itkRandomLinearInterpolateImageFunction.h"
+#include "itkLinearInterpolateImageFunction.h"
 #include "itkRecursiveGaussianImageFilter.h"
 #include "itkResampleImageFilter.h"
 
@@ -72,8 +72,7 @@ PICSLAdvancedNormalizationToolKit<TDimension, TReal>::ParseCommandLine(int argc,
       }
       else
       {
-        std::cout << "   "
-                  << "--" << (*its)->GetLongName() << std::endl;
+        std::cout << "   " << "--" << (*its)->GetLongName() << std::endl;
       }
     }
     std::cout << std::endl;
@@ -445,9 +444,8 @@ PICSLAdvancedNormalizationToolKit<TDimension, TReal>::ReadImagesAndMetrics()
 
       if (isMetricPointSetBased)
       {
-        std::cout << "Metric " << i << ": "
-                  << " Point-set " << whichMetric << " n-params " << option->GetFunction(i)->GetNumberOfParameters()
-                  << std::endl;
+        std::cout << "Metric " << i << ": " << " Point-set " << whichMetric << " n-params "
+                  << option->GetFunction(i)->GetNumberOfParameters() << std::endl;
         /**
          * Read in the point-set metric parameters
          */
@@ -639,8 +637,7 @@ PICSLAdvancedNormalizationToolKit<TDimension, TReal>::ReadImagesAndMetrics()
       }
       else // similarity metric is image-based
       {
-        std::cout << "Metric " << i << ": "
-                  << " Not a Point-set" << std::endl;
+        std::cout << "Metric " << i << ": " << " Not a Point-set" << std::endl;
         std::cout << "  Fixed image file: " << fixedImageFileReader->GetFileName() << std::endl;
         std::cout << "  Moving image file: " << movingImageFileReader->GetFileName() << std::endl;
 
@@ -1314,13 +1311,11 @@ PICSLAdvancedNormalizationToolKit<TDimension, TReal>::InitializeCommandLineOptio
 
     switch (TDimension)
     {
-      case 2:
-      {
+      case 2: {
         option->AddFunction(std::string("32x5000"));
       }
       break;
-      case 3:
-      {
+      case 3: {
         option->AddFunction(std::string("32x32000"));
       }
       break;

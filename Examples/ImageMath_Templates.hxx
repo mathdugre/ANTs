@@ -5294,7 +5294,7 @@ FitSphere(int argc, char * argv[])
   typedef typename ImageType::SizeType SizeType;
   typedef typename ImageType::SpacingType SpacingType;
   typedef itk::AffineTransform<double,ImageDimension>   AffineTransformType;
-  typedef itk::RandomLinearInterpolateImageFunction<ImageType,double>  InterpolatorType1;
+  typedef itk::LinearInterpolateImageFunction<ImageType,double>  InterpolatorType1;
   typedef itk::NearestNeighborInterpolateImageFunction<ImageType,double>  InterpolatorType2;
   typedef itk::ImageRegionIteratorWithIndex<ImageType> Iterator;
 
@@ -5325,7 +5325,7 @@ FitSphere(int argc, char * argv[])
 
   typename ImageType::Pointer surf = LabelSurface<ImageType>(image1,wmimage);
 
-  typedef itk::RandomLinearInterpolateImageFunction<ImageType,float> ScalarInterpolatorType;
+  typedef itk::LinearInterpolateImageFunction<ImageType,float> ScalarInterpolatorType;
   typename ScalarInterpolatorType::Pointer ginterp =  ScalarInterpolatorType::New();
   ginterp->SetInputImage(image1);
   typename ScalarInterpolatorType::ContinuousIndexType  Y1;
@@ -6917,7 +6917,7 @@ CompareHeadersAndImages(int argc, char * argv[])
 //   typedef  typename ImageType::SizeType SizeType;
 //   typedef  typename ImageType::SpacingType SpacingType;
 //   typedef itk::AffineTransform<double,ImageDimension>   AffineTransformType;
-//   typedef itk::RandomLinearInterpolateImageFunction<ImageType,double>  InterpolatorType1;
+//   typedef itk::LinearInterpolateImageFunction<ImageType,double>  InterpolatorType1;
 //   typedef itk::NearestNeighborInterpolateImageFunction<ImageType,double>  InterpolatorType2;
 //   typedef itk::ImageRegionIteratorWithIndex<ImageType> Iterator;
 //
@@ -10891,8 +10891,8 @@ ROIStatistics(int argc, char * argv[])
     labelcount++;
   }
 
-  typedef itk::RandomLinearInterpolateImageFunction<ImageType, float> ScalarInterpolatorType;
-  typename ScalarInterpolatorType::Pointer                            interp = ScalarInterpolatorType::New();
+  typedef itk::LinearInterpolateImageFunction<ImageType, float> ScalarInterpolatorType;
+  typename ScalarInterpolatorType::Pointer                      interp = ScalarInterpolatorType::New();
   if (valimage)
   {
     interp->SetInputImage(valimage);
@@ -13585,10 +13585,10 @@ getBlobCorrespondenceMatrix(unsigned int             radval,
   if ((!blobs2.empty()) && (!blobs1.empty()))
   {
     // unsigned int                                                  count2;
-    RealType                                                            smallval = 1.e-4;
-    typedef itk::RandomLinearInterpolateImageFunction<ImageType, float> ScalarInterpolatorType;
-    typedef typename ScalarInterpolatorType::Pointer                    InterpPointer;
-    InterpPointer                                                       interp1 = ScalarInterpolatorType::New();
+    RealType                                                      smallval = 1.e-4;
+    typedef itk::LinearInterpolateImageFunction<ImageType, float> ScalarInterpolatorType;
+    typedef typename ScalarInterpolatorType::Pointer              InterpPointer;
+    InterpPointer                                                 interp1 = ScalarInterpolatorType::New();
     interp1->SetInputImage(image);
     InterpPointer interp2 = ScalarInterpolatorType::New();
     interp2->SetInputImage(image2);

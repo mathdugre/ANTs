@@ -15,7 +15,7 @@
 #include "itkTransformFileReader.h"
 
 #include "itkBSplineInterpolateImageFunction.h"
-#include "itkRandomLinearInterpolateImageFunction.h"
+#include "itkLinearInterpolateImageFunction.h"
 #include "itkGaussianInterpolateImageFunction.h"
 #include "itkNearestNeighborInterpolateImageFunction.h"
 #include "itkWindowedSincInterpolateImageFunction.h"
@@ -487,18 +487,15 @@ antsApplyTransformsToPoints(std::vector<std::string> args, std::ostream * /*out_
   {
     switch (dimension)
     {
-      case 2:
-      {
+      case 2: {
         return antsApplyTransformsToPoints<2, double>(parser);
       }
       break;
-      case 3:
-      {
+      case 3: {
         return antsApplyTransformsToPoints<3, double>(parser);
       }
       break;
-      case 4:
-      {
+      case 4: {
         return antsApplyTransformsToPoints<4, double>(parser);
       }
       break;
@@ -511,18 +508,15 @@ antsApplyTransformsToPoints(std::vector<std::string> args, std::ostream * /*out_
   {
     switch (dimension)
     {
-      case 2:
-      {
+      case 2: {
         return antsApplyTransformsToPoints<2, float>(parser);
       }
       break;
-      case 3:
-      {
+      case 3: {
         return antsApplyTransformsToPoints<3, float>(parser);
       }
       break;
-      case 4:
-      {
+      case 4: {
         return antsApplyTransformsToPoints<4, float>(parser);
       }
       break;

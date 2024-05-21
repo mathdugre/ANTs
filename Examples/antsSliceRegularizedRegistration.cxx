@@ -64,7 +64,7 @@
 #include "itkSimilarity2DTransform.h"
 #include "itkSimilarity3DTransform.h"
 #include "itkBSplineInterpolateImageFunction.h"
-#include "itkRandomLinearInterpolateImageFunction.h"
+#include "itkLinearInterpolateImageFunction.h"
 #include "itkGaussianInterpolateImageFunction.h"
 #include "itkNearestNeighborInterpolateImageFunction.h"
 #include "itkWindowedSincInterpolateImageFunction.h"
@@ -659,7 +659,7 @@ ants_slice_regularized_registration(itk::ants::CommandLineParser * parser)
         }
         ConvertToLowerCase(samplingStrategy);
         itk::ImageRegistrationMethodv4Enums::MetricSamplingStrategy metricSamplingStrategy =
-		  itk::ImageRegistrationMethodv4Enums::MetricSamplingStrategy::NONE;
+          itk::ImageRegistrationMethodv4Enums::MetricSamplingStrategy::NONE;
         if (std::strcmp(samplingStrategy.c_str(), "random") == 0)
         {
           metricSamplingStrategy = itk::ImageRegistrationMethodv4Enums::MetricSamplingStrategy::RANDOM;
@@ -1358,8 +1358,7 @@ antsSliceRegularizedRegistration(std::vector<std::string> args, std::ostream * /
   {
     switch (dimension)
     {
-      case 3:
-      {
+      case 3: {
         return ants_slice_regularized_registration<3, TranslationTransformType>(parser);
       }
       break;
@@ -1373,8 +1372,7 @@ antsSliceRegularizedRegistration(std::vector<std::string> args, std::ostream * /
   {
     switch (dimension)
     {
-      case 3:
-      {
+      case 3: {
         return ants_slice_regularized_registration<3, EulerTransformType>(parser);
       }
       break;
@@ -1388,8 +1386,7 @@ antsSliceRegularizedRegistration(std::vector<std::string> args, std::ostream * /
   {
     switch (dimension)
     {
-      case 3:
-      {
+      case 3: {
         return ants_slice_regularized_registration<3, SimilarityTransformType>(parser);
       }
       break;

@@ -30,7 +30,7 @@
 #include "itkImageRegionIterator.h"
 #include "itkImageRegionIteratorWithIndex.h"
 #include "itkIterationReporter.h"
-#include "itkRandomLinearInterpolateImageFunction.h"
+#include "itkLinearInterpolateImageFunction.h"
 #include "itkNearestNeighborInterpolateImageFunction.h"
 #include "itkMath.h"
 #include "itkNeighborhoodIterator.h"
@@ -61,7 +61,7 @@ NonLocalSuperresolutionImageFilter<TInputImage, TOutputImage>::NonLocalSuperreso
   this->m_InterpolatedLowResolutionInputImage = nullptr;
 
   // Interpolator --- default to linear
-  typedef RandomLinearInterpolateImageFunction<InputImageType, RealType> LinearInterpolatorType;
+  typedef LinearInterpolateImageFunction<InputImageType, RealType> LinearInterpolatorType;
   this->m_Interpolator = LinearInterpolatorType::New();
 
   this->SetSimilarityMetric(NonLocalPatchBasedImageFilterEnums::SimilarityMetric::MEAN_SQUARES);

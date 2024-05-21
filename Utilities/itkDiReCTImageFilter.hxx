@@ -867,7 +867,7 @@ typename DiReCTImageFilter<TInputImage, TOutputImage>::RealImagePointer
 DiReCTImageFilter<TInputImage, TOutputImage>::WarpImage(const RealImageType *         inputImage,
                                                         const DisplacementFieldType * displacementField)
 {
-  using InterpolatorType = itk::RandomLinearInterpolateImageFunction<RealImageType, double>;
+  using InterpolatorType = itk::LinearInterpolateImageFunction<RealImageType, double>;
   auto interpolator = InterpolatorType::New();
 
   using WarperType = WarpImageFilter<RealImageType, RealImageType, DisplacementFieldType>;

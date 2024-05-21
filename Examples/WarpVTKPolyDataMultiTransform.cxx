@@ -148,7 +148,7 @@ WarpLabeledPointSetFileMultiTransform(char *           input_vtk_filename,
   // WarperType;
   using WarperType =
     itk::DisplacementFieldFromMultiTransformFilter<DisplacementFieldType, DisplacementFieldType, AffineTransformType>;
-  using FuncType = itk::RandomLinearInterpolateImageFunction<ImageType>;
+  using FuncType = itk::LinearInterpolateImageFunction<ImageType>;
 
   itk::TransformFactory<AffineTransformType>::RegisterTransform();
 

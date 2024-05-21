@@ -8,7 +8,7 @@
 #include "itkTransformFileReader.h"
 #include "itkNearestNeighborInterpolateImageFunction.h"
 #include "itkBSplineInterpolateImageFunction.h"
-#include "itkRandomLinearInterpolateImageFunction.h"
+#include "itkLinearInterpolateImageFunction.h"
 #include "antsUtilities.h"
 // Needed for the LabelImageGaussianInterpolateImageFunction to work on
 // vector images
@@ -410,7 +410,7 @@ WarpImageMultiTransform(char *           moving_image_filename,
   else
   {
     using LinInterpolateType =
-      typename itk::RandomLinearInterpolateImageFunction<ImageType, typename WarperType::CoordRepType>;
+      typename itk::LinearInterpolateImageFunction<ImageType, typename WarperType::CoordRepType>;
     typename LinInterpolateType::Pointer interpolator_LN = LinInterpolateType::New();
     std::cout << "User Linear interpolation " << std::endl;
     warper->SetInterpolator(interpolator_LN);

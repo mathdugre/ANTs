@@ -15,7 +15,7 @@
 #include "itkMattesMutualInformationImageToImageMetric.h"
 #include "itkCorrelationCoefficientHistogramImageToImageMetric.h"
 #include "itkMultiResolutionImageRegistrationMethod.h"
-#include "itkRandomLinearInterpolateImageFunction.h"
+#include "itkLinearInterpolateImageFunction.h"
 #include "itkANTSAffine3DTransform.h"
 #include "itkCenteredRigid2DTransform.h"
 #include "itkANTSCenteredAffine2DTransform.h"
@@ -24,7 +24,7 @@
 #include "itkTransformFileWriter.h"
 #include "itkImageRegionIteratorWithIndex.h"
 #include "itkResampleImageFilter.h"
-#include "itkRandomLinearInterpolateImageFunction.h"
+#include "itkLinearInterpolateImageFunction.h"
 #include "itkWarpImageFilter.h"
 #include "itkWarpImageWAffineFilter.h"
 #include "itkImageMomentsCalculator.h"
@@ -443,9 +443,9 @@ ComputeSingleAffineTransform2D3D(typename ImageType::Pointer &     fixed_image,
 {
   const int ImageDimension = ImageType::ImageDimension;
 
-  typedef std::vector<typename ImageType::Pointer>                     ImagePyramidType;
-  typedef itk::ImageMaskSpatialObject<ImageDimension>                  ImageMaskSpatialObjectType;
-  typedef itk::RandomLinearInterpolateImageFunction<ImageType, double> InterpolatorType;
+  typedef std::vector<typename ImageType::Pointer>               ImagePyramidType;
+  typedef itk::ImageMaskSpatialObject<ImageDimension>            ImageMaskSpatialObjectType;
+  typedef itk::LinearInterpolateImageFunction<ImageType, double> InterpolatorType;
 
   typedef typename TransformType::ParametersType ParaType;
 
@@ -829,8 +829,8 @@ TestCostValueMMI(ImagePointerType fixedImage,
   typedef typename itk::MattesMutualInformationImageToImageMetric<ImageType, ImageType> mattesMutualInfoMetricType;
   typename mattesMutualInfoMetricType::Pointer mattesMutualInfo = mattesMutualInfoMetricType::New();
 
-  typedef typename itk::RandomLinearInterpolateImageFunction<ImageType, double> InterpolatorType;
-  typename InterpolatorType::Pointer                                            interpolator = InterpolatorType::New();
+  typedef typename itk::LinearInterpolateImageFunction<ImageType, double> InterpolatorType;
+  typename InterpolatorType::Pointer                                      interpolator = InterpolatorType::New();
 
   interpolator->SetInputImage(movingImage);
 

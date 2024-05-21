@@ -7,7 +7,7 @@
 #include "itkNonLocalSuperresolutionImageFilter.h"
 
 #include "itkBSplineInterpolateImageFunction.h"
-#include "itkRandomLinearInterpolateImageFunction.h"
+#include "itkLinearInterpolateImageFunction.h"
 #include "itkGaussianInterpolateImageFunction.h"
 #include "itkInterpolateImageFunction.h"
 #include "itkNearestNeighborInterpolateImageFunction.h"
@@ -711,18 +711,15 @@ NonLocalSuperResolution(std::vector<std::string> args, std::ostream * /*out_stre
 
   switch (dimension)
   {
-    case 2:
-    {
+    case 2: {
       return NonLocalSuperResolution<2>(parser);
     }
     break;
-    case 3:
-    {
+    case 3: {
       return NonLocalSuperResolution<3>(parser);
     }
     break;
-    case 4:
-    {
+    case 4: {
       return NonLocalSuperResolution<4>(parser);
     }
     break;

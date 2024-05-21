@@ -18,7 +18,7 @@
 #include "itkTransformToDisplacementFieldFilter.h"
 
 #include "itkBSplineInterpolateImageFunction.h"
-#include "itkRandomLinearInterpolateImageFunction.h"
+#include "itkLinearInterpolateImageFunction.h"
 #include "itkGaussianInterpolateImageFunction.h"
 #include "itkInterpolateImageFunction.h"
 #include "itkNearestNeighborInterpolateImageFunction.h"
@@ -327,8 +327,7 @@ antsAlignOrigin(std::vector<std::string> args, std::ostream * /*out_stream = nul
 
   switch (dimension)
   {
-    case 2:
-    {
+    case 2: {
       if (inputImageTypeOption)
       {
         std::string inputImageType = inputImageTypeOption->GetFunction()->GetName();
@@ -357,8 +356,7 @@ antsAlignOrigin(std::vector<std::string> args, std::ostream * /*out_stream = nul
       }
     }
     break;
-    case 3:
-    {
+    case 3: {
       if (inputImageTypeOption)
       {
         std::string inputImageType = inputImageTypeOption->GetFunction()->GetName();
@@ -387,8 +385,7 @@ antsAlignOrigin(std::vector<std::string> args, std::ostream * /*out_stream = nul
       }
     }
     break;
-    case 4:
-    {
+    case 4: {
       if (inputImageTypeOption)
       {
         std::string inputImageType = inputImageTypeOption->GetFunction()->GetName();

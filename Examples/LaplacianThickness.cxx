@@ -802,7 +802,7 @@ LaplacianThickness(int argc, char * argv[])
   using TimeVaryingVelocityFieldType = DisplacementFieldType;
   using DefaultInterpolatorType = itk::VectorLinearInterpolateImageFunction<TimeVaryingVelocityFieldType, float>;
   typename DefaultInterpolatorType::Pointer vinterp = DefaultInterpolatorType::New();
-  using ScalarInterpolatorType = itk::RandomLinearInterpolateImageFunction<ImageType, float>;
+  using ScalarInterpolatorType = itk::LinearInterpolateImageFunction<ImageType, float>;
   typename ScalarInterpolatorType::Pointer sinterp = ScalarInterpolatorType::New();
   sinterp->SetInputImage(gm);
   if (sulci)

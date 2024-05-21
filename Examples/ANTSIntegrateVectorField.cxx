@@ -350,7 +350,7 @@ IntegrateVectorField(int argc, char * argv[])
   // UNUSED: typedef typename DisplacementFieldType::PointType                                      DPointType;
   using DefaultInterpolatorType = itk::VectorLinearInterpolateImageFunction<TimeVaryingVelocityFieldType, float>;
   typename DefaultInterpolatorType::Pointer vinterp = DefaultInterpolatorType::New();
-  using ScalarInterpolatorType = itk::RandomLinearInterpolateImageFunction<ImageType, float>;
+  using ScalarInterpolatorType = itk::LinearInterpolateImageFunction<ImageType, float>;
   VectorType zero;
   zero.Fill(0);
 

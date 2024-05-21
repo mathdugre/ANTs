@@ -17,7 +17,7 @@ typename InterpolatorType::Pointer interpolator = nullptr;
 
   if( !std::strcmp( whichInterpolator.c_str(), "linear" ) )
     {
-    typedef itk::RandomLinearInterpolateImageFunction<ImageType, RealType> LinearInterpolatorType;
+    typedef itk::LinearInterpolateImageFunction<ImageType, RealType> LinearInterpolatorType;
     typename LinearInterpolatorType::Pointer linearInterpolator = LinearInterpolatorType::New();
     interpolator = linearInterpolator;
     }
@@ -111,7 +111,7 @@ typename InterpolatorType::Pointer interpolator = nullptr;
     }
   else if( !std::strcmp( whichInterpolator.c_str(), "genericlabel" ) )
     {
-	typedef itk::LabelImageGenericInterpolateImageFunction<ImageType,itk::RandomLinearInterpolateImageFunction,RealType> GLInterpolatorType;
+	typedef itk::LabelImageGenericInterpolateImageFunction<ImageType,itk::LinearInterpolateImageFunction,RealType> GLInterpolatorType;
 	typename GLInterpolatorType::Pointer GenericLabelInterpolator = GLInterpolatorType::New();
 	interpolator = GenericLabelInterpolator;
     }

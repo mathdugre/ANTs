@@ -16,7 +16,7 @@
 
 #include "itkImageToImageFilter.h"
 #include "itkInterpolateImageFunction.h"
-#include "itkRandomLinearInterpolateImageFunction.h"
+#include "itkLinearInterpolateImageFunction.h"
 #include "itkVectorLinearInterpolateImageFunction.h"
 #include "itkVectorGaussianInterpolateImageFunction.h"
 #include "itkPoint.h"
@@ -50,7 +50,7 @@ namespace itk
  * Typically the mapped position does not correspond to an integer pixel
  * position in the input image. Interpolation via an image function
  * is used to compute values at non-integer positions. The default
- * interpolation typed used is the RandomLinearInterpolateImageFunction.
+ * interpolation typed used is the LinearInterpolateImageFunction.
  * The user can specify a particular interpolation function via
  * SetInterpolator(). Note that the input interpolator must derive
  * from base class InterpolateImageFunction.
@@ -138,7 +138,7 @@ public:
   typedef double                                                                      CoordRepType;
   typedef InterpolateImageFunction<InputImageType, CoordRepType>                      InterpolatorType;
   typedef typename InterpolatorType::Pointer                                          InterpolatorPointer;
-  typedef RandomLinearInterpolateImageFunction<InputImageType, CoordRepType>          DefaultInterpolatorType;
+  typedef LinearInterpolateImageFunction<InputImageType, CoordRepType>                DefaultInterpolatorType;
   typedef VectorLinearInterpolateImageFunction<DisplacementFieldType, CoordRepType>   DefaultVectorInterpolatorType;
   typedef VectorGaussianInterpolateImageFunction<DisplacementFieldType, CoordRepType> DefaultVectorInterpolatorType2;
   typedef typename DefaultVectorInterpolatorType::Pointer                             VectorInterpolatorPointer;

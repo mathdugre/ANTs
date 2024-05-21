@@ -18,7 +18,7 @@
 #include "itkImage.h"
 #include "itkConstantPadImageFilter.h"
 #include "itkIdentityTransform.h"
-#include "itkRandomLinearInterpolateImageFunction.h"
+#include "itkLinearInterpolateImageFunction.h"
 #include "itkRecursiveGaussianImageFilter.h"
 #include "itkPermuteAxesImageFilter.h"
 #include "itkFlipImageFilter.h"
@@ -209,13 +209,11 @@ PermuteFlipImageOrientationAxes(std::vector<std::string> args, std::ostream * /*
   // Get the image dimension
   switch (std::stoi(argv[1]))
   {
-    case 2:
-    {
+    case 2: {
       return PermuteFlipImageOrientationAxes<2>(argc - 1, argv + 1);
     }
     break;
-    case 3:
-    {
+    case 3: {
       return PermuteFlipImageOrientationAxes<3>(argc - 1, argv + 1);
     }
     break;

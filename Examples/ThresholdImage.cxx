@@ -28,7 +28,7 @@
 #include "itkImageRegionIteratorWithIndex.h"
 #include "itkKdTreeBasedKmeansEstimator.h"
 #include "itkLabelStatisticsImageFilter.h"
-#include "itkRandomLinearInterpolateImageFunction.h"
+#include "itkLinearInterpolateImageFunction.h"
 #include "itkListSample.h"
 #include "itkMinimumDecisionRule.h"
 #include "itkMultiplyImageFilter.h"
@@ -529,18 +529,15 @@ ThresholdImage(std::vector<std::string> args, std::ostream * /*out_stream = null
 
   switch (std::stoi(argv[1]))
   {
-    case 2:
-    {
+    case 2: {
       return ThresholdImage<2>(argc, argv);
     }
     break;
-    case 3:
-    {
+    case 3: {
       return ThresholdImage<3>(argc, argv);
     }
     break;
-    case 4:
-    {
+    case 4: {
       return ThresholdImage<4>(argc, argv);
     }
     break;

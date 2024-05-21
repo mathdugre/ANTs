@@ -21,7 +21,7 @@
 #include "itkImageToImageFilter.h"
 #include "itkExtrapolateImageFunction.h"
 #include "itkInterpolateImageFunction.h"
-#include "itkRandomLinearInterpolateImageFunction.h"
+#include "itkLinearInterpolateImageFunction.h"
 
 namespace itk
 {
@@ -64,8 +64,8 @@ public:
   typedef typename InputImageType::RegionType  InputImageRegionType;
   typedef typename OutputImageType::RegionType OutputImageRegionType;
 
-  typedef RandomLinearInterpolateImageFunction<InputImageType> DefaultInterpolatorType;
-  typedef typename DefaultInterpolatorType::Pointer            DefaultInterpolatorPointerType;
+  typedef LinearInterpolateImageFunction<InputImageType> DefaultInterpolatorType;
+  typedef typename DefaultInterpolatorType::Pointer      DefaultInterpolatorPointerType;
 
   typedef InterpolateImageFunction<InputImageType, double> InterpolatorType;
   typedef typename InterpolatorType::Pointer               InterpolatorPointerType;
@@ -81,7 +81,7 @@ public:
   itkSetMacro(IndexPadding, unsigned int);
 
   /** Set the interpolator function.  The default is
-   * RandomLinearInterpolateImageFunction<InputImageType,
+   * LinearInterpolateImageFunction<InputImageType,
    * TInterpolatorPrecisionType>. Some
    * other options are NearestNeighborInterpolateImageFunction
    * (useful for binary masks and other images with a small number of

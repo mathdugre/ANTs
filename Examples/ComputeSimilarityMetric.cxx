@@ -27,17 +27,17 @@ template <unsigned int ImageDimension>
 int
 ComputeSimilarityMetric(int argc, char * argv[])
 {
-  typedef float                                                        PixelType;
-  typedef itk::Vector<float, ImageDimension>                           VectorType;
-  typedef itk::Image<VectorType, ImageDimension>                       FieldType;
-  typedef itk::Image<PixelType, ImageDimension>                        ImageType;
-  typedef itk::ImageFileWriter<ImageType>                              writertype;
-  typedef typename ImageType::IndexType                                IndexType;
-  typedef typename ImageType::SizeType                                 SizeType;
-  typedef typename ImageType::SpacingType                              SpacingType;
-  typedef itk::AffineTransform<double, ImageDimension>                 AffineTransformType;
-  typedef itk::RandomLinearInterpolateImageFunction<ImageType, double> InterpolatorType1;
-  typedef itk::ImageRegionIteratorWithIndex<ImageType>                 Iterator;
+  typedef float                                                  PixelType;
+  typedef itk::Vector<float, ImageDimension>                     VectorType;
+  typedef itk::Image<VectorType, ImageDimension>                 FieldType;
+  typedef itk::Image<PixelType, ImageDimension>                  ImageType;
+  typedef itk::ImageFileWriter<ImageType>                        writertype;
+  typedef typename ImageType::IndexType                          IndexType;
+  typedef typename ImageType::SizeType                           SizeType;
+  typedef typename ImageType::SpacingType                        SpacingType;
+  typedef itk::AffineTransform<double, ImageDimension>           AffineTransformType;
+  typedef itk::LinearInterpolateImageFunction<ImageType, double> InterpolatorType1;
+  typedef itk::ImageRegionIteratorWithIndex<ImageType>           Iterator;
 
   typedef itk::Image<float, 2>                JointHistType;
   typedef itk::ImageFileWriter<JointHistType> jhwritertype;

@@ -22,7 +22,7 @@
 #include "itkVectorParameterizedNeighborhoodOperatorImageFilter.h"
 #include "itkANTSImageRegistrationOptimizer.h"
 #include "itkIdentityTransform.h"
-#include "itkRandomLinearInterpolateImageFunction.h"
+#include "itkLinearInterpolateImageFunction.h"
 #include "itkRecursiveGaussianImageFilter.h"
 #include "itkVectorGaussianInterpolateImageFunction.h"
 #include "itkResampleImageFilter.h"
@@ -89,10 +89,10 @@ ANTSImageRegistrationOptimizer<TDimension, TReal>::SubsampleImage(ImagePointer i
   //    RealType minimumSpacing = inputSpacing.GetVnlVector().min_value();
   //    RealType maximumSpacing = inputSpacing.GetVnlVector().max_value();
 
-  typedef ResampleImageFilter<ImageType, ImageType>              ResamplerType;
-  typename ResamplerType::Pointer                                resampler = ResamplerType::New();
-  typedef RandomLinearInterpolateImageFunction<ImageType, TComp> InterpolatorType;
-  typename InterpolatorType::Pointer                             interpolator = InterpolatorType::New();
+  typedef ResampleImageFilter<ImageType, ImageType>        ResamplerType;
+  typename ResamplerType::Pointer                          resampler = ResamplerType::New();
+  typedef LinearInterpolateImageFunction<ImageType, TComp> InterpolatorType;
+  typename InterpolatorType::Pointer                       interpolator = InterpolatorType::New();
   interpolator->SetInputImage(image);
   resampler->SetInterpolator(interpolator);
   typedef itk::IdentityTransform<TComp, TDimension> IdentityTransformType;

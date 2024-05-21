@@ -7,7 +7,7 @@
 #include "itkAddImageFilter.h"
 #include "itkAdaptiveNonLocalMeansDenoisingImageFilter.h"
 #include "itkIdentityTransform.h"
-#include "itkRandomLinearInterpolateImageFunction.h"
+#include "itkLinearInterpolateImageFunction.h"
 #include "itkResampleImageFilter.h"
 #include "itkShrinkImageFilter.h"
 #include "itkSubtractImageFilter.h"
@@ -338,7 +338,7 @@ Denoise(itk::ants::CommandLineParser * parser)
       resampler->SetTransform(transform);
     }
     {
-      using LinearInterpolatorType = itk::RandomLinearInterpolateImageFunction<ImageType, RealType>;
+      using LinearInterpolatorType = itk::LinearInterpolateImageFunction<ImageType, RealType>;
       typename LinearInterpolatorType::Pointer interpolator = LinearInterpolatorType::New();
       interpolator->SetInputImage(subtracter->GetOutput());
       resampler->SetInterpolator(interpolator);

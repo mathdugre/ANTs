@@ -62,8 +62,8 @@ RegistrationHelper<TComputeType, VImageDimension>::RegistrationHelper()
   , m_InitializeTransformsPerStage(false)
   , m_AllPreviousTransformsAreLinear(true)
 {
-  typedef itk::RandomLinearInterpolateImageFunction<ImageType, RealType> LinearInterpolatorType;
-  typename LinearInterpolatorType::Pointer linearInterpolator = LinearInterpolatorType::New();
+  typedef itk::LinearInterpolateImageFunction<ImageType, RealType> LinearInterpolatorType;
+  typename LinearInterpolatorType::Pointer                         linearInterpolator = LinearInterpolatorType::New();
   this->m_Interpolator = linearInterpolator;
 }
 
