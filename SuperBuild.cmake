@@ -107,6 +107,7 @@ CMAKE_DEPENDENT_OPTION(
      )
 
 option(BUILD_ALL_ANTS_APPS "Build all ANTs apps" ON)
+option(BUILD_REGISTRATION_ONLY "Build ANTsRegistration Apps" OFF)
 option(RUN_SHORT_TESTS    "Run the quick unit tests."                                   ON  )
 option(RUN_LONG_TESTS     "Run the time consuming tests. i.e. real world registrations" ON  )
 option(OLD_BASELINE_TESTS "Use reported metrics from old tests"                         OFF )
@@ -258,6 +259,7 @@ list(APPEND ${CMAKE_PROJECT_NAME}_SUPERBUILD_EP_VARS
   ITK_VERSION_MAJOR:STRING
   ITK_DIR:PATH
   BUILD_ALL_ANTS_APPS:BOOL
+  BUILD_REGISTRATION_ONLY:BOOL
   RUN_SHORT_TESTS:BOOL
   RUN_LONG_TESTS:BOOL
   OLD_BASELINE_TESTS:BOOL

@@ -202,57 +202,65 @@ set(MORE_ANTS_APPS
     StackSlices
   )
 
-foreach(ANTS_APP ${CORE_ANTS_APPS})
+if (BUILD_REGISTRATION_ONLY)
   if (BUILD_SHARED_LIBS)
-    DYNAMIC_ANTS_BUILD(${ANTS_APP} "")
+    DYNAMIC_ANTS_BUILD(antsRegistration "")
   else()
-    STATIC_ANTS_BUILD(${ANTS_APP} "")
+    STATIC_ANTS_BUILD(antsRegistration "")
   endif()
-endforeach()
-
-if (BUILD_ALL_ANTS_APPS)
-  foreach(ANTS_APP ${MORE_ANTS_APPS})
+else()
+  foreach(ANTS_APP ${CORE_ANTS_APPS})
     if (BUILD_SHARED_LIBS)
-     DYNAMIC_ANTS_BUILD(${ANTS_APP} "")
+      DYNAMIC_ANTS_BUILD(${ANTS_APP} "")
     else()
       STATIC_ANTS_BUILD(${ANTS_APP} "")
     endif()
   endforeach()
-else()
-  foreach(ANTS_APP ${MORE_ANTS_APPS})
-    if(ANTS_BUILD_${ANTS_APP})
+
+  if (BUILD_ALL_ANTS_APPS)
+    foreach(ANTS_APP ${MORE_ANTS_APPS})
       if (BUILD_SHARED_LIBS)
-        DYNAMIC_ANTS_BUILD(${ANTS_APP} "")
+      DYNAMIC_ANTS_BUILD(${ANTS_APP} "")
       else()
         STATIC_ANTS_BUILD(${ANTS_APP} "")
       endif()
-    endif()
-  endforeach()
-endif()
-
-
-if(USE_VTK)
-set(VTK_ANTS_APPS
-    # ConvertVectorFieldToVTK
-    antsSurf
-    antsVol
-    GetMeshAndTopology
-    CheckTopology
-    WarpVTKPolyDataMultiTransform
-    # FLATFEM
-    # ConformalMapping
-    # ANTSConformalMapping
-  )
-
-foreach(ANTS_APP ${VTK_ANTS_APPS})
-
-  if (BUILD_SHARED_LIBS)
-    DYNAMIC_ANTS_BUILD(${ANTS_APP} "${VTK_LIBRARIES}")
+    endforeach()
   else()
-    STATIC_ANTS_BUILD(${ANTS_APP} "${VTK_LIBRARIES}")
+    foreach(ANTS_APP ${MORE_ANTS_APPS})
+      if(ANTS_BUILD_${ANTS_APP})
+        if (BUILD_SHARED_LIBS)
+          DYNAMIC_ANTS_BUILD(${ANTS_APP} "")
+        else()
+          STATIC_ANTS_BUILD(${ANTS_APP} "")
+        endif()
+      endif()
+    endforeach()
   endif()
 
-endforeach()
+  if(USE_VTK)
+  set(VTK_ANTS_APPS
+      # ConvertVectorFieldToVTK
+      antsSurf
+      antsVol
+      GetMeshAndTopology
+      CheckTopology
+      WarpVTKPolyDataMultiTransform
+      # FLATFEM
+      # ConformalMapping
+      # ANTSConformalMapping
+    )
+
+  foreach(ANTS_APP ${VTK_ANTS_APPS})
+
+    if (BUILD_SHARED_LIBS)
+      DYNAMIC_ANTS_BUILD(${ANTS_APP} "${VTK_LIBRARIES}")
+    else()
+      STATIC_ANTS_BUILD(${ANTS_APP} "${VTK_LIBRARIES}")
+    endif()
+
+  endforeach()
+  endif()
+
 endif()
 
 ## Build test option

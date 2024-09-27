@@ -43,6 +43,7 @@ include(${ITK_USE_FILE})
 
 # Set up which ANTs apps to build
 option(BUILD_ALL_ANTS_APPS "Use All ANTs Apps" ON)
+option(BUILD_REGISTRATION_ONLY "Use Only Registration Apps" OFF)
 
 # Set up VTK
 option(USE_VTK "Use VTK Libraries" OFF)

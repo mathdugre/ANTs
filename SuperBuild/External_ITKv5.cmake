@@ -120,7 +120,7 @@ if(NOT DEFINED ${extProjName}_DIR AND NOT ${USE_SYSTEM_${extProjName}})
       -DITK_USE_SYSTEM_PNG=${ITK_USE_SYSTEM_PNG}
       -DITK_C_OPTIMIZATION_FLAGS:STRING=${ITK_C_OPTIMIZATION_FLAGS}
       -DITK_CXX_OPTIMIZATION_FLAGS:STRING=${ITK_CXX_OPTIMIZATION_FLAGS}
-      -DITK_USE_FLOAT_SPACE_PRECISION:BOOL=ON
+      # -DITK_USE_FLOAT_SPACE_PRECISION:BOOL=ON
 #      -DITK_MODULE_Core:BOOL=ON
 #      -DITK_MODULE_IO:BOOL=ON
 #      -DITK_MODULE_Filtering:BOOL=ON
@@ -152,8 +152,8 @@ if(NOT DEFINED ${extProjName}_DIR AND NOT ${USE_SYSTEM_${extProjName}})
 
 
   ### --- End Project specific additions
-  set(${proj}_REPOSITORY ${git_protocol}://github.com/InsightSoftwareConsortium/ITK.git)
-  set(${proj}_GIT_TAG e78f1c98ec84e7570288ce5586480d93bbffafeb) # 2024-03-12
+  set(${proj}_REPOSITORY ${git_protocol}://github.com/mathdugre/ITK.git)
+  set(${proj}_GIT_TAG df8fd00f4e7e828a61e82c63cd90d84158acc6c6) # 2024-03-12
   set(ITK_VERSION_ID ITK-5.4) ### NOTE: When updating GIT_TAG, also update ITK_VERSION_ID if ITK version has changed
 
   ExternalProject_Add(${proj}
