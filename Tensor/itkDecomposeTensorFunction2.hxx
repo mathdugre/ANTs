@@ -298,7 +298,7 @@ DecomposeTensorFunction2<TInput, TRealType, TOutput>::EvaluateCholeskyDecomposit
     }
   }
 
-  vnl_cholesky cholesky(m, vnl_cholesky::quiet);
+  vnl_cholesky cholesky(m, vnl_cholesky<RealType>::quiet);
 
   L.SetSize(M.Rows(), M.Cols());
   for (unsigned int i = 0; i < L.Rows(); i++)
