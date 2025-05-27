@@ -124,12 +124,14 @@ public:
         {
           // Print header line one time
           this->Logger() << "XXDIAGNOSTIC,Iteration,metricValue,convergenceValue,ITERATION_TIME_INDEX,SINCE_LAST,"
+                            "LIPSCHITZ,PARAMS_NORM,GRAD_NORM,"
                             "FullScaleCCInterval="
                          << this->m_ComputeFullScaleCCInterval << std::flush << std::endl;
         }
         else
         {
-          this->Logger() << "XXDIAGNOSTIC,Iteration,metricValue,convergenceValue,ITERATION_TIME_INDEX,SINCE_LAST"
+          this->Logger() << "XXDIAGNOSTIC,Iteration,metricValue,convergenceValue,ITERATION_TIME_INDEX,SINCE_LAST,"
+                            "LIPSCHITZ,PARAMS_NORM,GRAD_NORM"
                          << std::endl;
         }
       }
@@ -160,14 +162,17 @@ public:
       else
       {
         this->Logger() << " "; // if the output of current iteration is written to disk, and star
-      }                        // will appear before line, else a free space will be printed to keep visual alignment.
+      } // will appear before line, else a free space will be printed to keep visual alignment.
 
       std::streamsize ss = std::cout.precision();
 
       this->Logger() << "1DIAGNOSTIC, " << std::setw(5) << lCurrentIteration << ", " << std::scientific
                      << std::setprecision(12) << filter->GetCurrentMetricValue() << ", " << std::scientific
                      << std::setprecision(12) << filter->GetCurrentConvergenceValue() << ", " << std::setprecision(4)
-                     << now << ", " << std::setprecision(4) << (now - this->m_lastTotalTime) << ", ";
+                     << now << ", " << std::setprecision(4) << (now - this->m_lastTotalTime) << ", " << std::scientific
+                     << std::setprecision(12) << filter->GetOptimizer()->GetLipschitzEstimate() << ", "
+                     << std::setprecision(12) << filter->GetOptimizer()->GetParametersTwoNorm() << ", "
+                     << std::setprecision(12) << filter->GetOptimizer()->GetGradientTwoNorm() << ", ";
       if ((this->m_ComputeFullScaleCCInterval != 0) && fabs(metricValue) > 1e-7)
       {
         this->Logger() << std::scientific << std::setprecision(12) << metricValue << std::flush << std::endl;

@@ -103,14 +103,15 @@ public:
         if (this->m_ComputeFullScaleCCInterval != 0)
         {
           // Print header line one time
-          this->Logger()
-            << "DIAGNOSTIC,Iteration,metricValue,convergenceValue,ITERATION_TIME_INDEX,SINCE_LAST,FullScaleCCInterval="
-            << this->m_ComputeFullScaleCCInterval << std::flush << std::endl;
+          this->Logger() << "DIAGNOSTIC,Iteration,metricValue,convergenceValue,ITERATION_TIME_INDEX,SINCE_LAST,"
+                            "LIPSCHITZ,PARAMS_NORM,GRAD_NORM,FullScaleCCInterval"
+                         << this->m_ComputeFullScaleCCInterval << std::flush << std::endl;
         }
         else
         {
-          this->Logger() << "DIAGNOSTIC,Iteration,metricValue,convergenceValue,ITERATION_TIME_INDEX,SINCE_LAST"
-                         << std::flush << std::endl;
+          this->Logger()
+            << "DIAGNOSTIC,Iteration,metricValue,convergenceValue,ITERATION_TIME_INDEX,SINCE_LAST,LIPSCHITZ,PARAMS_NORM,GRAD_NORM"
+            << std::flush << std::endl;
         }
       }
       m_clock.Stop();
@@ -140,12 +141,15 @@ public:
       else
       {
         this->Logger() << " "; // if the output of current iteration is written to disk, and star
-      }                        // will appear before line, else a free space will be printed to keep visual alignment.
+      } // will appear before line, else a free space will be printed to keep visual alignment.
 
       this->Logger() << "2DIAGNOSTIC, " << std::setw(5) << currentIteration << ", " << std::scientific
                      << std::setprecision(12) << this->m_Optimizer->GetValue() << ", " << std::scientific
                      << std::setprecision(12) << this->m_Optimizer->GetConvergenceValue() << ", "
                      << std::setprecision(4) << now << ", " << std::setprecision(4) << (now - this->m_lastTotalTime)
+                     << ", " << std::scientific << std::setprecision(12) << this->m_Optimizer->GetLipschitzEstimate()
+                     << ", " << std::scientific << std::setprecision(12) << this->m_Optimizer->GetParametersTwoNorm()
+                     << ", " << std::scientific << std::setprecision(12) << this->m_Optimizer->GetGradientTwoNorm()
                      << ", ";
       if ((this->m_ComputeFullScaleCCInterval != 0) && std::fabs(metricValue) > static_cast<MeasureType>(1e-7))
       {
@@ -388,7 +392,8 @@ public:
 
     // write the results to the disk
     std::stringstream currentFileName;
-    currentFileName << this->m_OutputPrefix << "Stage" << this->m_CurrentStageNumber + 1 << "_level" << this->m_CurrentLevel;
+    currentFileName << this->m_OutputPrefix << "Stage" << this->m_CurrentStageNumber + 1 << "_level"
+                    << this->m_CurrentLevel;
     /*
     The name arrangement of written files are important to us.
     To prevent: "Iter1 Iter10 Iter2 Iter20" we use the following style.
