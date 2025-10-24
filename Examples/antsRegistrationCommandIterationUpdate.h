@@ -96,9 +96,6 @@ public:
                      << std::setprecision(12) << filter->GetCurrentMetricValue() << ", " << std::scientific
                      << std::setprecision(12) << filter->GetCurrentConvergenceValue() << ", " << std::setprecision(4)
                      << now << ", " << std::setprecision(4) << (now - this->m_lastTotalTime) << ", " << std::flush
-                     << std::scientific << std::setprecision(12) << filter->GetOptimizer()->GetLipschitzEstimate()
-                     << std::scientific << std::setprecision(12) << filter->GetOptimizer()->GetParametersTwoNorm()
-                     << std::scientific << std::setprecision(12) << filter->GetOptimizer()->GetGradientTwoNorm()
                      << ", ";
       this->m_lastTotalTime = now;
       m_clock.Start();
