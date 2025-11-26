@@ -104,14 +104,16 @@ public:
         {
           // Print header line one time
           this->Logger() << "DIAGNOSTIC,Iteration,metricValue,convergenceValue,ITERATION_TIME_INDEX,SINCE_LAST,"
+                            "VPREC_PRECISION,PMIN_ESTIMATE,PMIN_ESTIMATE_ROLLING_AVG,PMIN_ESTIMATE_ROLLING_MAX,"
                             "LIPSCHITZ,PARAMS_NORM,GRAD_NORM,FullScaleCCInterval"
                          << this->m_ComputeFullScaleCCInterval << std::flush << std::endl;
         }
         else
         {
-          this->Logger()
-            << "DIAGNOSTIC,Iteration,metricValue,convergenceValue,ITERATION_TIME_INDEX,SINCE_LAST,LIPSCHITZ,PARAMS_NORM,GRAD_NORM"
-            << std::flush << std::endl;
+          this->Logger() << "DIAGNOSTIC,Iteration,metricValue,convergenceValue,ITERATION_TIME_INDEX,SINCE_LAST,"
+                            "VPREC_PRECISION,PMIN_ESTIMATE,PMIN_ESTIMATE_ROLLING_AVG,PMIN_ESTIMATE_ROLLING_MAX,"
+                            "LIPSCHITZ,PARAMS_NORM,GRAD_NORM"
+                         << std::flush << std::endl;
         }
       }
       m_clock.Stop();
@@ -147,10 +149,13 @@ public:
                      << std::setprecision(12) << this->m_Optimizer->GetValue() << ", " << std::scientific
                      << std::setprecision(12) << this->m_Optimizer->GetConvergenceValue() << ", "
                      << std::setprecision(4) << now << ", " << std::setprecision(4) << (now - this->m_lastTotalTime)
-                     << ", " << std::scientific << std::setprecision(12) << this->m_Optimizer->GetLipschitzEstimate()
-                     << ", " << std::scientific << std::setprecision(12) << this->m_Optimizer->GetParametersTwoNorm()
-                     << ", " << std::scientific << std::setprecision(12) << this->m_Optimizer->GetGradientTwoNorm()
-                     << ", ";
+                     << ", " << std::setw(5) << this->m_Optimizer->GetVPRECPrecision() << ", " << std::scientific
+                     << std::setprecision(12) << this->m_Optimizer->GetPminEstimate() << ", " << std::scientific
+                     << std::setprecision(12) << this->m_Optimizer->GetRollingAveragePminEstimate() << ", "
+                     << std::setprecision(12) << this->m_Optimizer->GetRollingMaxPminEstimate() << ", "
+                     << std::scientific << std::setprecision(12) << this->m_Optimizer->GetLipschitzEstimate() << ", "
+                     << std::scientific << std::setprecision(12) << this->m_Optimizer->GetParametersTwoNorm() << ", "
+                     << std::scientific << std::setprecision(12) << this->m_Optimizer->GetGradientTwoNorm() << ", ";
       if ((this->m_ComputeFullScaleCCInterval != 0) && std::fabs(metricValue) > static_cast<MeasureType>(1e-7))
       {
         this->Logger() << std::scientific << std::setprecision(12) << metricValue << std::flush << std::endl;

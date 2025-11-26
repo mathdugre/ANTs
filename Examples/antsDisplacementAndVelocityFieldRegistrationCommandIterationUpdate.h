@@ -123,15 +123,17 @@ public:
         if (this->m_ComputeFullScaleCCInterval != 0)
         {
           // Print header line one time
-          this->Logger() << "XXDIAGNOSTIC,Iteration,metricValue,convergenceValue,ITERATION_TIME_INDEX,SINCE_LAST"
-                            ",M_LIPSCHITZ,M_PARAMS_NORM,M_GRAD_NORM,F_LIPSCHITZ,F_PARAMS_NORM,F_GRAD_NORM"
-                            ",FullScaleCCInterval="
-                         << this->m_ComputeFullScaleCCInterval << std::flush << std::endl;
+          this->Logger()
+            << "XXDIAGNOSTIC,Iteration,metricValue,convergenceValue,ITERATION_TIME_INDEX,SINCE_LAST,"
+               "VPREC_PRECISION,PMIN_ESTIMATE,PMIN_ESTIMATE_ROLLING_AVG,PMIN_ESTIMATE_ROLLING_MAX,"
+               "M_LIPSCHITZ,M_PARAMS_NORM,M_GRAD_NORM,F_LIPSCHITZ,F_PARAMS_NORM,F_GRAD_NORM,FullScaleCCInterval="
+            << this->m_ComputeFullScaleCCInterval << std::flush << std::endl;
         }
         else
         {
-          this->Logger() << "XXDIAGNOSTIC,Iteration,metricValue,convergenceValue,ITERATION_TIME_INDEX,SINCE_LAST"
-                            ",M_LIPSCHITZ,M_PARAMS_NORM,M_GRAD_NORM,F_LIPSCHITZ,F_PARAMS_NORM,F_GRAD_NORM"
+          this->Logger() << "XXDIAGNOSTIC,Iteration,metricValue,convergenceValue,ITERATION_TIME_INDEX,SINCE_LAST,"
+                            "VPREC_PRECISION,PMIN_ESTIMATE,PMIN_ESTIMATE_ROLLING_AVG,PMIN_ESTIMATE_ROLLING_MAX,"
+                            "M_LIPSCHITZ,M_PARAMS_NORM,M_GRAD_NORM,F_LIPSCHITZ,F_PARAMS_NORM,F_GRAD_NORM"
                          << std::endl;
         }
       }
@@ -169,13 +171,17 @@ public:
       this->Logger() << "1DIAGNOSTIC, " << std::setw(5) << lCurrentIteration << ", " << std::scientific
                      << std::setprecision(12) << filter->GetCurrentMetricValue() << ", " << std::scientific
                      << std::setprecision(12) << filter->GetCurrentConvergenceValue() << ", " << std::setprecision(4)
-                     << now << ", " << std::setprecision(4) << (now - this->m_lastTotalTime) << ", " << std::scientific
-                     << std::setprecision(12) << filter->GetMovingLipschitzEstimate() << ", " << std::scientific
-                     << std::setprecision(12) << filter->GetMovingParametersTwoNorm() << ", " << std::scientific
-                     << std::setprecision(12) << filter->GetMovingGradientTwoNorm() << ", " << std::scientific
-                     << std::setprecision(12) << filter->GetFixedLipschitzEstimate() << ", " << std::scientific
-                     << std::setprecision(12) << filter->GetFixedParametersTwoNorm() << ", " << std::scientific
-                     << std::setprecision(12) << filter->GetFixedGradientTwoNorm();
+                     << now << ", " << std::setprecision(4) << (now - this->m_lastTotalTime) << ", " << std::setw(5)
+                     << filter->GetVPRECPrecision() << ", " << std::scientific << std::setprecision(12)
+                     << filter->GetPminEstimate() << ", " << std::scientific << std::setprecision(12)
+                     << filter->GetRollingAveragePminEstimate() << ", " << std::scientific << std::setprecision(12)
+                     << filter->GetRollingMaxPminEstimate() << ", " << std::scientific << std::setprecision(12)
+                     << filter->GetMovingLipschitzEstimate() << ", " << std::scientific << std::setprecision(12)
+                     << filter->GetMovingParametersTwoNorm() << ", " << std::scientific << std::setprecision(12)
+                     << filter->GetMovingGradientTwoNorm() << ", " << std::scientific << std::setprecision(12)
+                     << filter->GetFixedLipschitzEstimate() << ", " << std::scientific << std::setprecision(12)
+                     << filter->GetFixedParametersTwoNorm() << ", " << std::scientific << std::setprecision(12)
+                     << filter->GetFixedGradientTwoNorm();
       if ((this->m_ComputeFullScaleCCInterval != 0) && fabs(metricValue) > 1e-7)
       {
         this->Logger() << std::scientific << std::setprecision(12) << metricValue << std::flush << std::endl;
